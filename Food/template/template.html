@@ -11,7 +11,7 @@
         <h1 class="w3-jumbo w3-hide-small">Welcome</h1>
         <h1 class="w3-hide-large w3-hide-medium">Welcome</h1>
         <h1 class="w3-hide-small">BK Smart Food Court</h1>
-        <p><a href="#food" class="w3-button w3-black w3-padding-large w3-large w3-text-white">EAT NOW</a></p>
+        <p><a style="text-decoration: none" href="#food" class="w3-button w3-black w3-padding-large w3-large w3-text-white">EAT NOW</a></p>
     </div>
 </div>
 
@@ -28,10 +28,10 @@
                 <a href="food/{{ food.id }}">
                     <img src={{food.imgURL}} width="250px" height="200px">
                     <span class="w3-tag w3-display-topleft">New</span>
+                    {% if food.stock %}
                     <div class="w3-display-middle w3-display-hover">
                         <button class="w3-button w3-black">Buy now <i class="fa fa-shopping-cart"></i></button>
                     </div>
-                    {% if food.stock %}
                     <p>{{food.name}}<br><b>{{food.price}} VNĐ</b></p>
                     {% else %}
                     <p> Hết hàng </p>

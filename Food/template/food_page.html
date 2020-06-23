@@ -10,13 +10,19 @@
         <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio,
             vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec
             lacinia congue felis in faucibus.</p>
-        <h3 class="mt-0"><b> {{food.price }} VNĐ</b></h3>
-        <input id="demo_vertical" type="text" value="" name="demo_vertical">
-        <script>
-            $("input[name='demo_vertical']").TouchSpin({
-                verticalbuttons: true
-            });
+        {% if not food.stock %}
+        <h3> Hết hàng </h3>
 
+        {% else %}
+        <h3 class="mt-0"><b> {{food.price }} VNĐ</b></h3>
+        <input type="number" value="1" min="0" max="100" step="1"/>
+        <p class="w3-padding-16">
+            <button type="button" class="btn btn-primary">Thêm vào giỏ hàng</button>
+        </p>
+        {% endif %}
+        <script src="./src/bootstrap-input-spinner.js"></script>
+        <script>
+            $("input[type='number']").inputSpinner()
         </script>
     </div>
 </div>

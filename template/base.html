@@ -4,12 +4,14 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
     <title>Smart FoodCourt System</title>
+    <style>
+        a {text-decoration : none;}
+    </style>
 </head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -17,8 +19,9 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
-.w3-sidebar a {font-family: "Roboto", sans-serif}
+.w3-sidebar a {font-family: "Roboto", sans-serif; text-decoration: none; }
 body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
+
 
 
 
@@ -37,12 +40,12 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
         <i class="fa fa-remove"></i>
     </a>
     <div class="w3-bar-block w3-center">
-        <a href="" class="w3-bar-item w3-button w3-text-grey w3-hover-black" onclick="closeNav()">Home</a>
-        <a href="#portfolio" class="w3-bar-item w3-button w3-text-grey w3-hover-black"
+        <a href="/" class="w3-bar-item w3-button w3-text-grey w3-hover-black" onclick="closeNav()">Home</a>
+        <a class="w3-bar-item w3-button w3-text-grey w3-hover-black"
            onclick="closeNav()">Portfolio</a>
         <a href="#about" class="w3-bar-item w3-button w3-text-grey w3-hover-black" onclick="closeNav()">About</a>
 
-        <a href="#footer" class="w3-bar-item w3-button w3-text-grey w3-hover-black w3-padding">Contact</a>
+        <a href="#contact" class="w3-bar-item w3-button w3-text-grey w3-hover-black w3-padding">Contact</a>
         <a href="javascript:void(0)" class="w3-bar-item w3-button w3-text-grey w3-hover-black w3-padding"
            onclick="document.getElementById('newsletter').style.display='block'">Newsletterádf</a>
         <a href="#footer" class="w3-bar-item w3-button w3-padding w3-text-grey w3-hover-black">Subscribe</a>
@@ -70,14 +73,23 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
-        <a href="/" class="w3-left">SFCS</a>
+        <a style="text-decoration: none" href="/" class="w3-left">SFCS</a>
         <p class="w3-right">
-            <a href="/cart">
+            <a style="text-decoration: none" href="/cart">
                 <i class="fa fa-shopping-cart"></i>
             </a>
-            <a href="/accounts/login">
-                <button type="button" class="btn btn-outline-dark">Login</button>
-            </a>
+
+
+            {% if user.username %}
+            <font size="2">
+                Xin chào {{user.username}}
+            </font>
+            <a href="/accounts/login" class="btn btn-outline-dark">Login</a>
+            {% else %}
+            <a href="/accounts/login" class="btn btn-outline-dark">Login</a>
+            <a href="/accounts/signup" class="btn btn-outline-dark">Signup</a>
+
+            {% endif %}
         </p>
         <!-- Start Top Search -->
         <!-- Search form -->
