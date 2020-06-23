@@ -3,39 +3,40 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-    <!-- Image header -->
-    <div class="w3-display-container w3-container">
-        <img src="http://diroiseden.com/wp-content/uploads/2016/04/terminal-21-food-court.jpg"
-             alt="FoodCourt" style="width:100%">
-        <div class="w3-display-topleft w3-text-red" style="padding:24px 48px">
-            <h1 class="w3-jumbo w3-hide-small">Welcome</h1>
-            <h1 class="w3-hide-large w3-hide-medium">Welcome</h1>
-            <h1 class="w3-hide-small">BK Smart Food Court</h1>
-            <p><a href="#food" class="w3-button w3-black w3-padding-large w3-large w3-text-white">EAT NOW</a></p>
-        </div>
+<!-- Image header -->
+<div class="w3-display-container w3-container">
+    <img src="http://diroiseden.com/wp-content/uploads/2016/04/terminal-21-food-court.jpg"
+         alt="FoodCourt" style="width:100%">
+    <div class="w3-display-topleft w3-text-red" style="padding:24px 48px">
+        <h1 class="w3-jumbo w3-hide-small">Welcome</h1>
+        <h1 class="w3-hide-large w3-hide-medium">Welcome</h1>
+        <h1 class="w3-hide-small">BK Smart Food Court</h1>
+        <p><a href="#food" class="w3-button w3-black w3-padding-large w3-large w3-text-white">EAT NOW</a></p>
     </div>
+</div>
 
-    <div class="w3-container w3-text-grey" id="food">
-        <p>8 items</p>
-    </div>
+<div class="w3-container w3-text-grey" id="food">
+    <p>{{ food_list|length }} item(s)</p>
+</div>
 
-    <!-- Product grid -->
-    <div class="w3-row">
-        {% for food in food_list %}
-        <div class="w3-col l3 s6">
-            <div class="w3-container">
-                <div class="w3-display-container">
-                <img src={{food.imgURL}} width="250px" height="200px">
+<!-- Product grid -->
+<div class="w3-row">
+    {% for food in food_list %}
+    <div class="w3-col l3 s6">
+        <div class="w3-container">
+            <div class="w3-display-container">
+                <a href="/food/{{ food.id }}">
+                    <img src={{food.imgURL}} width="250px" height="200px">
                     <span class="w3-tag w3-display-topleft">New</span>
                     <div class="w3-display-middle w3-display-hover">
                         <button class="w3-button w3-black">Buy now <i class="fa fa-shopping-cart"></i></button>
                     </div>
-                <p>{{food.name}}<br><b>{{food.price}} VNĐ</b>
-                </div>
+                    <p>{{food.name}}<br><b>{{food.price}} VNĐ</b>
             </div>
+            </a>
         </div>
-        {% endfor %}
-
+    </div>
+    {% endfor %}
 
 
     <!-- End page content -->

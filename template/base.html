@@ -22,6 +22,9 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 
 
 
+
+
+
 </style>
 <body class="w3-content" style="max-width:1200px">
 
@@ -69,9 +72,23 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
     <header class="w3-container w3-xlarge">
         <a href="/home" class="w3-left">SFCS</a>
         <p class="w3-right">
-            <i class="fa fa-shopping-cart w3-margin-right"></i>
-            <i class="fa fa-search"></i>
+            <a href="/cart">
+                <i class="fa fa-shopping-cart"></i>
+            </a>
+            <a href="/accounts/login">
+                <button type="button" class="btn btn-outline-dark">Login</button>
+            </a>
         </p>
+        <!-- Start Top Search -->
+        <!-- Search form -->
+        <form action="/home/search/" method="get"
+              class="form-inline d-flex justify-content-center md-form form-sm mt-0 my-2">
+            <i class="fa fa-search" aria-hidden="true"></i>
+            <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"
+                   aria-label="Search" name="food_name">
+        </form>
+        <!-- End top search -->
+
     </header>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -97,7 +114,12 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
     document.getElementById("myOverlay").style.display = "none";
     }
 
+    function openSearchBar() { }
+
+
+
     </script>
+
 
     <main>
         {% block content %}

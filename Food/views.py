@@ -9,3 +9,7 @@ class FoodView(View):
         food_list = Food.objects.all()
         return render(request, 'template.html', {'food_list' : food_list})
 
+    def searchByName(request):
+        result = Food.objects.filter(name__contains=request.GET['food_name'])
+        return render(request, 'search_page.html', {'food_list' : result})
+
