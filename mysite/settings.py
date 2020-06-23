@@ -57,7 +57,8 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR, 'Food/template'),
-            os.path.join(BASE_DIR, 'template')
+            os.path.join(BASE_DIR, 'template'),
+            os.path.join(BASE_DIR, 'template/registration')
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -123,5 +124,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/home/'
