@@ -3,5 +3,21 @@
 {% block title %}{{ food.name }}{% endblock %}
 
 {% block content %}
-<h1> <b>{{ food.name }} </b></h1>
+<div class="media w3-padding-16">
+    <img src={{ food.imgURL }} class="align-self-center mr-3" alt={{food.name}} width="350px" height="350px">
+    <div class="media-body">
+        <h2 class="mt-0"><b>{{food.name}} </b></h2>
+        <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio,
+            vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec
+            lacinia congue felis in faucibus.</p>
+        <h3 class="mt-0"><b> {{food.price }} VNĐ</b></h3>
+        <input id="demo_vertical" type="text" value="" name="demo_vertical">
+        <script>
+            $("input[name='demo_vertical']").TouchSpin({
+                verticalbuttons: true
+            });
+
+        </script>
+    </div>
+</div>
 {% endblock %}
