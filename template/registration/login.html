@@ -16,25 +16,25 @@
 {% endif %}
 {% endif %}
 
+<h1 class="w3-center"> WELCOME </h1>
+<h3 class="w3-center w3-padding-16"> Đăng nhập tài khoản</h3>
 
-<form method="post" action="{% url 'login' %}">
-    <div class="w3-display-container w3-container">
-        {% csrf_token %}
-        <table>
-            <tr>
-                <td>{{ form.username.label_tag }}</td>
-                <td>{{ form.username }}</td>
-            </tr>
-            <tr>
-                <td>{{ form.password.label_tag }}</td>
-                <td>{{ form.password }}</td>
-            </tr>
-        </table>
-        <input type="submit" value="Login"/>
-        <input type="hidden" name="next" value="{{ next }}"/>
-    </div>
+<form class="box w3-padding-16" method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <table>
+        <tr>
+            <td>{{ form.username.label_tag }}</td>
+            <td>{{ form.username }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.password.label_tag }}</td>
+            <td>{{ form.password }}</td>
+        </tr>
+    </table>
+    <input type="submit" value="Login"/>
+    <input type="hidden" name="next" value="{{ next }}"/>
+
 </form>
-
 
 {# Assumes you setup the password_reset view in your URLconf #}
 <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
