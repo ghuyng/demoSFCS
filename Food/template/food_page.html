@@ -16,15 +16,29 @@
         {% else %}
         <h3 class="mt-0"><b> {{food.price }} VNĐ</b></h3>
         <font size="2"> Số lượng :</font>
-        <input type="number" value="1" min="0" max="100" step="1" size="10"/>
+        <input id="spinner-input" type="number" value="1" min="0" max="100" step="1" size="10"/>
         <p class="w3-padding-16">
-            <button type="button" class="btn btn-primary">Thêm vào giỏ hàng</button>
+            <button id="add-cart-btn" type="button" class="btn btn-primary">Thêm vào giỏ hàng</button>
         </p>
         {% endif %}
-        <script src="./src/bootstrap-input-spinner.js"></script>
-        <script>
-            $("input[type='number']").inputSpinner()
-        </script>
+
     </div>
 </div>
+
+<!--<script src="./src/bootstrap-input-spinner.js"></script>-->
+<script>
+   $("#spinner-input").inputSpinner()
+   $("#add-cart-btn").click(function(){
+        $.ajax({
+            url: "/",
+            method: 'POST', // or another (GET), whatever you need
+            data: {
+                name: 1, // data you need to pass to your function
+                value: $("#spinner-input").val(),
+                click: true
+            }
+
+        }
+   }
+</script>
 {% endblock %}
