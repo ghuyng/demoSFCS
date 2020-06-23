@@ -25,15 +25,20 @@
     <div class="w3-col l3 s6">
         <div class="w3-container">
             <div class="w3-display-container">
-                <a href="/food/{{ food.id }}">
+                <a href="food/{{ food.id }}">
                     <img src={{food.imgURL}} width="250px" height="200px">
                     <span class="w3-tag w3-display-topleft">New</span>
                     <div class="w3-display-middle w3-display-hover">
                         <button class="w3-button w3-black">Buy now <i class="fa fa-shopping-cart"></i></button>
                     </div>
-                    <p>{{food.name}}<br><b>{{food.price}} VNĐ</b>
+                    {% if food.stock %}
+                    <p>{{food.name}}<br><b>{{food.price}} VNĐ</b></p>
+                    {% else %}
+                    <p> Hết hàng </p>
+                    {% endif %}
+                </a>
             </div>
-            </a>
+
         </div>
     </div>
     {% endfor %}
