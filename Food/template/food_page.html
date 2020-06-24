@@ -15,30 +15,46 @@
 
         {% else %}
         <h3 class="mt-0"><b> {{food.price }} VNĐ</b></h3>
+
+        {% csrf_token %}
         <font size="2"> Số lượng :</font>
-        <input id="spinner-input" type="number" value="1" min="0" max="100" step="1" size="10"/>
+        <input id="spinner-input" type="number" name="quantity" value="1" min="0" max="100" step="1" size="10"/>
         <p class="w3-padding-16">
-            <button id="add-cart-btn" type="button" class="btn btn-primary">Thêm vào giỏ hàng</button>
+            <button class="btn btn-primary" id="add-cart-btn"> Thêm vào giỏ hàng
+            </button>
         </p>
+
         {% endif %}
 
     </div>
 </div>
 
-<!--<script src="./src/bootstrap-input-spinner.js"></script>-->
-<script>
-   $("#spinner-input").inputSpinner()
-   $("#add-cart-btn").click(function(){
-        $.ajax({
-            url: "/",
-            method: 'POST', // or another (GET), whatever you need
-            data: {
-                name: 1, // data you need to pass to your function
-                value: $("#spinner-input").val(),
-                click: true
-            }
+<!--script src="./src/bootstrap-input-spinner.js"></--script-->
 
-        }
-   }
+{% block javascript %}
+<script>   $("#spinner-input").inputSpinner</script>
+<script>
+
+   $("#add-cart-btn").click(function(){
+
+        $.ajax({
+            url: "{% url "add-to-cart" %}",
+            type: 'GET', // or another (GET), whatever you need
+            data: {
+                food_id: {{ food.id}}, // data you need to pass to your function
+                value: $("#spinner-input").val(),
+            },
+            dataType: 'json',
+            success: function(data){
+                if (data.success){
+                    alert('Đã thêm vào giỏ hàng' + data.a + data.b);
+                }
+
+            }
+        });
+   });
+
+
 </script>
+{% endblock %}
 {% endblock %}

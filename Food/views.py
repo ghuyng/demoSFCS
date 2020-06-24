@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from django.contrib import messages
 from django.views import View
 from django.http import HttpResponse
+from django.http import JsonResponse
 
 from .models import Food
 
@@ -16,11 +18,21 @@ class FoodView(View):
         return render(request, 'search_page.html', {'food_list' : result})
 
     def foodInfoView(request, food_id):
-        if request.method == 'POST':
-            return HttpResponse("Đã thêm món ăn vào giỏ hàng")
-        else:
-            food = Food.objects.get(id=food_id)
-            return render(request, 'food_page.html', {'food': food})
+        food = get_object_or_404(Food, id=food_id)
+        return render(request, 'food_page.html', {'food': food})
+
+    def addToCart(request):
+        a = int(request.GET['value'])
+        b = int(request.GET['food_id'])
+        data = {
+            'success' : True,
+            'a' : a,
+            'b' : b
+        }
+        if a <= 0:
+            data['success'] = False
+
+        return JsonResponse(data)
 
 
 
