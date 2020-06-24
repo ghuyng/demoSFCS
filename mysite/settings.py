@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Food.apps.FoodConfig',
     'accounts.apps.AccountsConfig',
+    'order.apps.OrderConfig',
 ]
 
 MIDDLEWARE = [
@@ -59,7 +60,7 @@ TEMPLATES = [
         'DIRS': [
             os.path.join(BASE_DIR, 'Food/template'),
             os.path.join(BASE_DIR, 'template'),
-            os.path.join(BASE_DIR, 'template/registration')
+            os.path.join(BASE_DIR, 'order/template'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -127,3 +128,7 @@ STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+#Session Config
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_AGE = 30 * 60

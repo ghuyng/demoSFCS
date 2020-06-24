@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 
 {% block title %}{{ food.name }}{% endblock %}
-
 {% block content %}
+<div class="alert alert-success" id="success-alert">
+    Sản phẩm đã được thêm vào giỏ hàng.
+</div>
 <div class="media w3-padding-16">
     <img src={{ food.imgURL }} class="align-self-center mr-3" alt={{food.name}} width="350px" height="350px">
     <div class="media-body">
@@ -16,18 +18,19 @@
         {% else %}
         <h3 class="mt-0"><b> {{food.price }} VNĐ</b></h3>
 
-        {% csrf_token %}
+
         <font size="2"> Số lượng :</font>
         <input id="spinner-input" type="number" name="quantity" value="1" min="0" max="100" step="1" size="10"/>
         <p class="w3-padding-16">
             <button class="btn btn-primary" id="add-cart-btn"> Thêm vào giỏ hàng
             </button>
         </p>
-
         {% endif %}
 
     </div>
+
 </div>
+
 
 <!--script src="./src/bootstrap-input-spinner.js"></--script-->
 
@@ -35,11 +38,12 @@
 <script>   $("#spinner-input").inputSpinner</script>
 <script>
 
+   $("#success-alert").hide();
    $("#add-cart-btn").click(function(){
 
         $.ajax({
             url: "{% url "add-to-cart" %}",
-            type: 'GET', // or another (GET), whatever you need
+            type: 'GET',
             data: {
                 food_id: {{ food.id}}, // data you need to pass to your function
                 value: $("#spinner-input").val(),
@@ -47,12 +51,16 @@
             dataType: 'json',
             success: function(data){
                 if (data.success){
-                    alert('Đã thêm vào giỏ hàng' + data.value);
+                    //alert('Đã thêm vào giỏ hàng');
+                    $("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
+                         $("#success-alert").slideUp(500);
+                    });
                 }
 
             }
         });
    });
+
 
 
 </script>
