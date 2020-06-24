@@ -22,17 +22,23 @@ class FoodView(View):
         return render(request, 'food_page.html', {'food': food})
 
     def addToCart(request):
-        a = int(request.GET['value'])
-        b = int(request.GET['food_id'])
+        quantity = int(request.GET['value'])
+        food_id = int(request.GET['food_id'])
         data = {
-            'success' : True,
-            'a' : a,
-            'b' : b
+            'success' : False,
+            'value' : quantity
         }
-        if a <= 0:
-            data['success'] = False
+        if quantity > 0:
+            data['success'] = True
+            request.session[food_id] = quantity
+            data['value'] = request.session[food_id]
 
         return JsonResponse(data)
+
+    def viewCart(request):
+        #if not request.session[1]:
+        request.session[1] = '10'
+        return render(request, 'cart.html', {'cart': request.session[1]})
 
 
 
