@@ -22,8 +22,7 @@
         <font size="2"> Số lượng :</font>
         <input id="spinner-input" type="number" name="quantity" value="1" min="0" max="100" step="1" size="10"/>
         <p class="w3-padding-16">
-            <button class="btn btn-primary" id="add-cart-btn"> Thêm vào giỏ hàng
-            </button>
+            <button class="btn btn-primary" id="add-cart-btn"> Thêm vào giỏ hàng </button>
         </p>
         {% endif %}
 
@@ -32,10 +31,9 @@
 </div>
 
 
-<!--script src="./src/bootstrap-input-spinner.js"></--script-->
+
 
 {% block javascript %}
-<script>   $("#spinner-input").inputSpinner</script>
 <script>
 
    $("#success-alert").hide();
@@ -60,7 +58,6 @@
             }
         });
    });
-
 
 
 </script>

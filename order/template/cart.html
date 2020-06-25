@@ -9,21 +9,62 @@
 <div class="w3-container w3-text-grey" id="food_length">
     <h4>GIỎ HÀNG ({{ cart|length }} sản phẩm)</h4>
 </div>
-<ul class="list-unstyled">
-    {% for food, quantity in cart %}
-    <li class="media w3-padding-16">
+<div class="container">
+    <div class="row">
+        <div class="col-9 border border-primary rounded">
+            <ul class="list-unstyled">
+                {% for food, quantity in cart %}
+                <li class="media pt-2 pb-2">
+                    <img src="{{ food.imgURL }}" class="mr-3" alt={{food.name}} width="100px" height="100px">
+                    <div class="media-body">
+                        <h5 class="mt-0 mb-1">{{ food.name }}</h5>
+                        <font size="2px"> Cung cấp bởi cửa hàng <strong> Store </strong> </font>
+                    </div>
+                    <div class="pr-3">
+                        Số lượng : <input onchange="updateTotal()" id="spinner-input" class="input" type="number"
+                                          name="quantity" value="{{quantity}}" min="1" max="100" step="1" size="10"/>
+                    </div>
+                    <div class="price">
+                        <strong>{{ food.price }} VNĐ </strong>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-2 col-sm border border-primary rounded ml-3">
+            <p>Thành tiền </p>
+            <p id="total"></p>
+        </div>
+    </div>
+</div>
 
-        <img src="{{ food.imgURL }}" class="mr-3" alt={{food.name}} width="100px" height="100px">
-        <div class="media-body">
-            <h5 class="mt-0 mb-1">{{ food.name }}</h5>
-            Được cung cấp bởi cửa hàng <strong> Store </strong>
-        </div>
-        <div>
-            <strong>{{ food.price|stringformat:"i" }} VNĐ </strong>
-        </div>
-    </li>
-    {% endfor %}
-</ul>
+{% block javascript %}
+
+<script>
+        var x = document.getElementsByClassName("price");
+        var total = 0;
+        for (var i = 0; i < x.length; i++) {
+            total += $("#spinner-input").val() * parseInt(x[i].textContent);
+        }
+        document.getElementById("total").innerHTML = total.toString() + " VNĐ";
+
+
+</script>
+<script>
+        function updateTotal(){
+            var x = document.getElementsByClassName("price");
+            var total = 0;
+            for (var i = 0; i < x.length; i++) {
+                total += $("#spinner-input").val() * parseInt(x[i].textContent);
+            }
+            document.getElementById("total").innerHTML = total.toString() + " VNĐ";
+        }
+
+
+</script>
+
+{% endblock %}
 
 
 {% endblock %}
+
