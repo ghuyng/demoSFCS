@@ -6,9 +6,24 @@
 
 
 {% block content %}
-<div class="container">
-    {% for key, value in cart.items %}
-    <h2> {{ key }} : {{ value }}</h2>
-    {% endfor %}
+<div class="w3-container w3-text-grey" id="food_length">
+    <h4>GIỎ HÀNG ({{ cart|length }} sản phẩm)</h4>
 </div>
+<ul class="list-unstyled">
+    {% for food, quantity in cart %}
+    <li class="media w3-padding-16">
+
+        <img src="{{ food.imgURL }}" class="mr-3" alt={{food.name}} width="100px" height="100px">
+        <div class="media-body">
+            <h5 class="mt-0 mb-1">{{ food.name }}</h5>
+            Được cung cấp bởi cửa hàng <strong> Store </strong>
+        </div>
+        <div>
+            <strong>{{ food.price|stringformat:"i" }} VNĐ </strong>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+
+
 {% endblock %}
