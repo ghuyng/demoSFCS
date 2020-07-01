@@ -63,3 +63,18 @@ def removeFromCart(request):
             return JsonResponse({"success": False}, status=400)
     except KeyError:
         return JsonResponse({"success": False}, status=400)
+
+
+def updateItem(request):
+    food_id = request.GET['food_id']
+    quantity = int(request.GET['value'])
+    try:
+        cart_dict = request.session['cart']
+        if food_id in cart_dict:
+            cart_dict[food_id] = quantity
+            request.session['cart'] = cart_dict
+            return JsonResponse({"success": True}, status=200)
+        else:
+            return JsonResponse({"success": False}, status=400)
+    except KeyError:
+        return JsonResponse({"success": False}, status=400)

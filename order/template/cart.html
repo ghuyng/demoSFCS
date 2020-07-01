@@ -23,8 +23,8 @@
                         <a href="" onclick='removeItem("{{ food.id }}")'> Xóa </a>
                     </div>
                     <div class="pr-3 col-lg-3" style="text-align: right">
-                        Số lượng : <input onchange="updateTotal()" id="spinner-input" class="input" type="number"
-                                          name="quantity" value="{{quantity}}" min="1" max="100" step="1" size="10"/>
+                        Số lượng : <input id="quantity-input-{{food.id}}" onchange="changeItem('{{food.id}}')" class="input" type="number"
+                                          value="{{quantity}}" min="1" max="100" step="1" size="10"/>
                     </div>
                     <div class="price col-lg-2" style="text-align: right">
                         <strong>{{ food.price|intcomma }} VNĐ </strong>
@@ -47,32 +47,54 @@
 {% block javascript %}
 
 <script>
+    //setup before functions
+    var typingTimer;                //timer identifier
+    var doneTypingInterval = 1000;  //time in ms, 5 second for example
 
-        function updateTotal(){
-            var total = 0;
-            {% for food, quantity in cart %}
-                total += {{food.price}} * {{ quantity }};
-            {% endfor %}
-            $("#total").val(total);
-        }
+    function changeItem(food_id) {
+        //input on change, start the countdown
+        clearTimeout(typingTimer);
+
+        // only update data after user done changing
+        var quantity = $("#quantity-input-" + food_id).val();
+        typingTimer = setTimeout(updateItem, doneTypingInterval, food_id, quantity);
+    }
+
+    function updateItem(food_id, quantity){
+        $.ajax({
+            type: 'GET',
+            url: "{% url 'update-item' %}",
+            data: {
+                "food_id": food_id,
+                "value": quantity,
+            },
+            success: function (response) {
+                // if success
+                 location.reload()
+            },
+            error: function (response) {
+                console.log(response)
+            }
+        });
+    }
 
 
-        function removeItem(food_id){
-            $.ajax({
-                type: 'GET',
-                url: "{% url 'remove-from-cart' %}",
-                data: {
-                    "food_id": food_id,
-                },
-                success: function (response) {
-                    // if success
-                     location.reload()
-                },
-                error: function (response) {
-                    console.log(response)
-                }
-            });
-        }
+    function removeItem(food_id){
+        $.ajax({
+            type: 'GET',
+            url: "{% url 'remove-from-cart' %}",
+            data: {
+                "food_id": food_id,
+            },
+            success: function (response) {
+                // if success
+                 location.reload()
+            },
+            error: function (response) {
+                console.log(response)
+            }
+        });
+    }
 
 
 </script>
