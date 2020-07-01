@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'Food.apps.FoodConfig',
     'accounts.apps.AccountsConfig',
     'order.apps.OrderConfig',
@@ -131,4 +132,3 @@ LOGOUT_REDIRECT_URL = '/'
 
 #Session Config
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-SESSION_COOKIE_AGE = 30 * 60

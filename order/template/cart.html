@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
 {% block title %}
-<title> Shopping Cart </title>
+<title xmlns="http://www.w3.org/1999/html"> Shopping Cart </title>
 {% endblock %}
 
-
 {% block content %}
+{% load humanize %}
 <div class="w3-container w3-text-grey" id="food_length">
     <h4>GIỎ HÀNG ({{ cart|length }} sản phẩm)</h4>
 </div>
@@ -19,21 +19,27 @@
                     <div class="media-body">
                         <h5 class="mt-0 mb-1">{{ food.name }}</h5>
                         <font size="2px"> Cung cấp bởi cửa hàng <strong> Store </strong> </font>
+                        <br> <br>
+                        <a href="" onclick='removeItem("{{ food.id }}")'> Xóa </a>
                     </div>
                     <div class="pr-3">
                         Số lượng : <input onchange="updateTotal()" id="spinner-input" class="input" type="number"
                                           name="quantity" value="{{quantity}}" min="1" max="100" step="1" size="10"/>
                     </div>
                     <div class="price">
-                        <strong>{{ food.price }} VNĐ </strong>
+                        <strong>{{ food.price|intcomma }} VNĐ </strong>
                     </div>
+
                 </li>
                 {% endfor %}
             </ul>
         </div>
-        <div class="col-2 col-sm border border-primary rounded ml-3">
-            <p>Thành tiền </p>
-            <p id="total"></p>
+        <div class="col-2 col-sm rounded ml-3">
+            <font size="2px">Thành tiền </font>
+            <br>
+            <h5>
+                <strong id="total" style="color:red"> {{ total|intcomma }} VNĐ</strong>
+            </h5>
         </div>
     </div>
 </div>
@@ -41,23 +47,38 @@
 {% block javascript %}
 
 <script>
-        var x = document.getElementsByClassName("price");
-        var total = 0;
-        for (var i = 0; i < x.length; i++) {
-            total += $("#spinner-input").val() * parseInt(x[i].textContent);
-        }
-        document.getElementById("total").innerHTML = total.toString() + " VNĐ";
-
-
-</script>
-<script>
-        function updateTotal(){
-            var x = document.getElementsByClassName("price");
+        $(document).ready(function (e) {
             var total = 0;
-            for (var i = 0; i < x.length; i++) {
-                total += $("#spinner-input").val() * parseInt(x[i].textContent);
-            }
-            document.getElementById("total").innerHTML = total.toString() + " VNĐ";
+            {% for food, quantity in cart %}
+                total += {{food.price}} * {{ quantity }};
+            {% endfor %}
+            $("#total").val(total);
+         });
+
+        function updateTotal(){
+            var total = 0;
+            {% for food, quantity in cart %}
+                total += {{food.price}} * {{ quantity }};
+            {% endfor %}
+            $("#total").val(total);
+        }
+
+
+        function removeItem(food_id){
+            $.ajax({
+                type: 'GET',
+                url: "{% url 'remove-from-cart' %}",
+                data: {
+                    "food_id": food_id,
+                },
+                success: function (response) {
+                    // if success
+                     location.reload()
+                },
+                error: function (response) {
+                    console.log(response)
+                }
+            });
         }
 
 

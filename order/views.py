@@ -6,6 +6,8 @@ from Food.models import Food
 
 # Create your views here.
 
+# cart is store in session as a dictionary with key = food_id and value = quantity
+# request.session['cart'] = {f_id1: quantity1, f_id2: quantity2,...}
 def addToCart(request):
     quantity = int(request.GET['value'])
     food_id = request.GET['food_id']
@@ -28,12 +30,11 @@ def addToCart(request):
 
     return JsonResponse(data)
 
-
-def calcTotal(request):
-    cart_dict = request.session.get('cart', {})
+def calcTotal(cart_dict):
+    #cart_dict = request.session.get('cart', {})
     total = 0
-    for food_id, quantity in cart_dict.items():
-        total += Food.objects.get(id=food_id).price * quantity
+    for food, quantity in cart_dict:
+        total += food.price * quantity
 
     return total
 
@@ -41,15 +42,24 @@ def calcTotal(request):
 def viewCart(request):
     cart_dict = request.session.get('cart', {})
     cart = []
+    total = 0
     for food_id, quantity in cart_dict.items():
         food = Food.objects.get(id=food_id)
         cart.append((food, quantity))
+        total += food.price * quantity
 
-    return render(request, 'cart.html', {'cart': cart})
+    return render(request, 'cart.html', {'cart': cart, 'total' : total})
 
 
-def clearCart(request):
+def removeFromCart(request):
+    food_id = request.GET['food_id']
     try:
-        request.session['cart'] = {}
+        cart_dict = request.session['cart']
+        if food_id in cart_dict:
+            del cart_dict[food_id]
+            request.session['cart'] = cart_dict
+            return JsonResponse({"success": True}, status=200)
+        else:
+            return JsonResponse({"success": False}, status=400)
     except KeyError:
-        pass
+        return JsonResponse({"success": False}, status=400)
