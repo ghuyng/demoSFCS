@@ -2,6 +2,7 @@
 
 {% block title %}{{ food.name }}{% endblock %}
 {% block content %}
+{% load humanize %}
 <div class="alert alert-success" id="success-alert">
     Sản phẩm đã được thêm vào giỏ hàng.
 </div>
@@ -16,7 +17,7 @@
         <h3> Hết hàng </h3>
 
         {% else %}
-        <h3 class="mt-0"><b> {{food.price }} VNĐ</b></h3>
+        <h3 class="mt-0"><b> {{food.price|intcomma}} VNĐ</b></h3>
 
 
         <font size="2"> Số lượng :</font>

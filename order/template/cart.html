@@ -16,17 +16,17 @@
                 {% for food, quantity in cart %}
                 <li class="media pt-2 pb-2">
                     <img src="{{ food.imgURL }}" class="mr-3" alt={{food.name}} width="100px" height="100px">
-                    <div class="media-body">
+                    <div class="media-body col-9">
                         <h5 class="mt-0 mb-1">{{ food.name }}</h5>
                         <font size="2px"> Cung cấp bởi cửa hàng <strong> Store </strong> </font>
                         <br> <br>
                         <a href="" onclick='removeItem("{{ food.id }}")'> Xóa </a>
                     </div>
-                    <div class="pr-3">
+                    <div class="pr-3 col-lg-3" style="text-align: right">
                         Số lượng : <input onchange="updateTotal()" id="spinner-input" class="input" type="number"
                                           name="quantity" value="{{quantity}}" min="1" max="100" step="1" size="10"/>
                     </div>
-                    <div class="price">
+                    <div class="price col-lg-2" style="text-align: right">
                         <strong>{{ food.price|intcomma }} VNĐ </strong>
                     </div>
 
@@ -47,13 +47,6 @@
 {% block javascript %}
 
 <script>
-        $(document).ready(function (e) {
-            var total = 0;
-            {% for food, quantity in cart %}
-                total += {{food.price}} * {{ quantity }};
-            {% endfor %}
-            $("#total").val(total);
-         });
 
         function updateTotal(){
             var total = 0;

@@ -3,6 +3,7 @@
 {% block title %}Search{% endblock %}
 
 {% block content %}
+{% load humanize %}
 <div class="w3-container w3-text-grey" id="food">
     <p>{{ food_list|length }} item(s) found</p>
 </div>
@@ -20,7 +21,7 @@
                     <div class="w3-display-middle w3-display-hover">
                         <button class="w3-button w3-black">Buy now <i class="fa fa-shopping-cart"></i></button>
                     </div>
-                    <p>{{food.name}}<br><b>{{food.price}} VNĐ</b></p>
+                    <p>{{food.name}}<br><b>{{food.price|intcomma}} VNĐ</b></p>
                     {% else %}
                     <p>{{food.name}}<br><b>Hết hàng </b></p>
                     {% endif %}
