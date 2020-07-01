@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title> Order </title>
+{% endblock %}
+
+{% block content %}
+{% load humanize %}
+<div class="w3-container w3-text-grey" id="food_length">
+    <h4>ĐƠN HÀNG</h4>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-9 border border-primary rounded">
+            <ul class="list-unstyled">
+                <li> Mã đơn hàng : {{order.id}}</li>
+                <li> Cung cấp bởi : {{ order.store }}</li>
+                <li> Người dùng : {{ order.customer.username }}</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

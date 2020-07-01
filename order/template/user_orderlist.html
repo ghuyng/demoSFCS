@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title> Order </title>
+{% endblock %}
+
+{% block content %}
+{% load humanize %}
+{% for order in order_list %}
+<a href="{% url 'view-order' order.id %}"> {{order}} </a>
+<br>
+{% endfor %}
+{% endblock %}
