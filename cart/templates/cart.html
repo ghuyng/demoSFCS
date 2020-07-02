@@ -4,60 +4,64 @@
 
 {% block content %}
 {% load humanize %}
-<div class="w3-container w3-text-grey" id="food_length">
-    <h4>GIỎ HÀNG ({{ cart|length }} sản phẩm)</h4>
-</div>
-<div class="container">
-    <div class="row">
-        <div class="col-9 border border-primary rounded">
-            <ul class="list-unstyled">
-                {% for food, quantity in cart %}
-                <li class="media pt-2 pb-2">
-                    <img src="{{ food.imgURL }}" class="mr-3" alt={{food.name}} width="100px" height="100px">
-                    <div class="media-body col-9">
-                        <h5 class="mt-0 mb-1">{{ food.name }}</h5>
-                        <font size="2px"> Cung cấp bởi cửa hàng <strong> Store </strong> </font>
-                        <br> <br>
-                        <a href="" onclick='removeItem("{{ food.id }}")'> Xóa </a>
-                    </div>
-                    <div class="pr-3 col-lg-3" style="text-align: right">
-                        Số lượng <input id="quantity-input-{{food.id}}" onchange="changeItem('{{food.id}}')"
-                                        class="input" type="number"
-                                        value="{{quantity}}" min="1" max="100" step="1" size="10"/>
-                    </div>
-                    <div class="price col-lg-2" style="text-align: right">
-                        <strong>{{ food.price|intcomma }} VNĐ </strong>
-                    </div>
+<div id="cart-body">
 
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div class="col-2 col-sm rounded ml-3">
-            <font size="2px">Thành tiền </font>
-            <br>
-            <h4>
-                <strong id="total" style="color:red"> {{ total|intcomma }} VNĐ</strong>
-            </h4>
-            <button onclick="makeOrder()" data-toggle="modal" class="btn btn-primary btn-lg btn-block">Thanh toán</button>
+    <div class="w3-container w3-text-grey" id="food_length">
+        <h4>GIỎ HÀNG ({{ cart|length }} sản phẩm)</h4>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-9 border border-primary rounded">
+                <ul class="list-unstyled">
+                    {% for food, quantity in cart %}
+                    <li class="media pt-2 pb-2">
+                        <img src="{{ food.imgURL }}" class="mr-3" alt={{food.name}} width="100px" height="100px">
+                        <div class="media-body col-9">
+                            <h5 class="mt-0 mb-1">{{ food.name }}</h5>
+                            <font size="2px"> Cung cấp bởi cửa hàng <strong> Store </strong> </font>
+                            <br> <br>
+                            <a href="" onclick='removeItem("{{ food.id }}")'> Xóa </a>
+                        </div>
+                        <div class="pr-3 col-lg-3" style="text-align: right">
+                            Số lượng <input id="quantity-input-{{food.id}}" onchange="changeItem('{{food.id}}')"
+                                            class="input" type="number"
+                                            value="{{quantity}}" min="1" max="100" step="1" size="10"/>
+                        </div>
+                        <div class="price col-lg-2" style="text-align: right">
+                            <strong>{{ food.price|intcomma }} VNĐ </strong>
+                        </div>
+
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-2 col-sm rounded ml-3">
+                <font size="2px">Thành tiền </font>
+                <br>
+                <h4>
+                    <strong id="total" style="color:red"> {{ total|intcomma }} VNĐ</strong>
+                </h4>
+                <button onclick="makeOrder()" data-toggle="modal" class="btn btn-primary btn-lg btn-block">Thanh toán
+                </button>
+            </div>
         </div>
     </div>
-</div>
 
+</div>
 <!-- Modal HTML -->
 <div id="myModal" class="modal fade">
-	<div class="modal-dialog modal-confirm">
-		<div class="modal-content">
-			<div class="modal-header justify-content-center">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			</div>
-			<div class="modal-body text-center">
-				<h3>Thành công!</h3>
-				<p>Đơn hàng của bạn đang được xử lí.</p>
-                <button class="btn btn-success" data-dismiss="modal" ><span>Xem chi tiết đơn hàng</span> </button>
-			</div>
-		</div>
-	</div>
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body text-center">
+                <h3>Thành công!</h3>
+                <p>Đơn hàng của bạn đang được xử lí.</p>
+                <button class="btn btn-success" data-dismiss="modal" onclick=""><span>Xem chi tiết đơn hàng</span></button>
+            </div>
+        </div>
+    </div>
 </div>
 <!--Model Popup ends-->
 {% block javascript %}
@@ -85,7 +89,7 @@
             },
             success: function (response) {
                 // if success
-                 location.reload()
+                 $("#cart-body").load(location.href + " #cart-body");
 
             },
             error: function (response) {
@@ -104,7 +108,7 @@
             },
             success: function (response) {
                 // if success
-                 location.reload()
+                 $("#cart-body").load(location.href + " #cart-body");
             },
             error: function (response) {
                 console.log(response)
@@ -117,8 +121,18 @@
             type: 'GET',
             url: "{% url 'make-order' %}",
             success: function (response) {
-                // if success
+                if (response.success){
+                    $("#cart-body").load(location.href + " #cart-body");
+                    $("#myModal").modal('show');
 
+                }
+                else if(response.message == "EMPTY_CART"){
+                    $(".modal-body").html("<h3> Thất bại </h3><p> Giỏ hàng trống </p>");
+
+                }
+                else{
+                    $(".modal-body").html("<h3> Thất bại </h3><p> Thanh toán không hoàn tất </p>");
+                }
                 $("#myModal").modal('show');
             },
             error: function (response) {
@@ -126,6 +140,7 @@
             }
         });
     }
+
 
 
 

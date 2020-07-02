@@ -3,6 +3,7 @@ from django.views import View
 from django.http import HttpResponse
 from django.http import JsonResponse
 from .models import Order, StoreOrder, OrderItem, Status
+from Food.models import Food
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -12,22 +13,25 @@ def processPayment(request):
 
 @login_required
 def makeOrder(request):
+    if 'cart' not in request.session or request.session['cart'] == {}:
+        return JsonResponse({"success": False,"message": "EMPTY_CART"})
     if processPayment(request):
         cart = request.session['cart']
         user = request.user
         order = user.order_set.create()
         for food_id, quantity in cart.items():
             food = Food.objects.get(id = int(food_id))
-            store_order = order.storeorder_set.get(store=food.store)
-            if store_order is None:
-                store_order = order.storeorder_set.create(store=food.store,
-                                                          status=Status.PROCESSING)
+            store_order, created = order.storeorder_set.get_or_create(store=food.store,
+                                                                      defaults={'status':Status.PROCESSING})
 
             store_order.orderitem_set.create(product=food,
                                              paid_price=food.price,
                                              quantity=quantity)
 
-        return render(request,'order.html', {'order' : order})
+        request.session['cart'] = {}
+        return JsonResponse({"success" : True,"message": "Thành công"}, status=200)
+    else:
+        return JsonResponse({"success" : False,"message": "FAIL_PAYMENT"})
 
 
 @login_required
