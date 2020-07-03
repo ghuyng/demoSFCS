@@ -31,12 +31,14 @@
             <td>{{ form.password }}</td>
         </tr>
     </table>
-    <input type="submit" class="btn btn-primary" value="Login"/>
+    <input type="submit" class="btn btn-primary" value="Đăng nhập"/>
     <input type="hidden" name="next" value="{{ next }}"/>
 
 </form>
 
 {# Assumes you setup the password_reset view in your URLconf #}
-<p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+<p><a href="{% url 'password_reset' %}">Quên mật khẩu?</a></p>
+<p><a href="{% url 'signup' %}">Chưa có tài khoản? Đăng kí</a></p>
+
 
 {% endblock %}

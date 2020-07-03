@@ -11,10 +11,14 @@ from django.contrib.auth.decorators import login_required
 def processPayment(request):
     return True
 
-@login_required
+
 def makeOrder(request):
     if 'cart' not in request.session or request.session['cart'] == {}:
         return JsonResponse({"success": False,"message": "EMPTY_CART"})
+
+    if not request.user.is_authenticated:
+        return JsonResponse({"success": False, "message": "LOGIN_REQUIRED"})
+
     if processPayment(request):
         cart = request.session['cart']
         user = request.user
@@ -29,7 +33,7 @@ def makeOrder(request):
                                              quantity=quantity)
 
         request.session['cart'] = {}
-        return JsonResponse({"success" : True,"message": "Thành công"}, status=200)
+        return JsonResponse({"success" : True,"message": ""}, status=200)
     else:
         return JsonResponse({"success" : False,"message": "FAIL_PAYMENT"})
 

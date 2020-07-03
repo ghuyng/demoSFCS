@@ -18,7 +18,7 @@
                         <img src="{{ food.imgURL }}" class="mr-3" alt={{food.name}} width="100px" height="100px">
                         <div class="media-body col-9">
                             <h5 class="mt-0 mb-1">{{ food.name }}</h5>
-                            <font size="2px"> Cung cấp bởi cửa hàng <strong> Store </strong> </font>
+                            <font size="2px"> Cung cấp bởi cửa hàng <strong> {{ food.store.name }} </strong> </font>
                             <br> <br>
                             <a href="" onclick='removeItem("{{ food.id }}")'> Xóa </a>
                         </div>
@@ -56,9 +56,11 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <div class="modal-body text-center">
-                <h3>Thành công!</h3>
-                <p>Đơn hàng của bạn đang được xử lí.</p>
-                <button class="btn btn-success" data-dismiss="modal" onclick=""><span>Xem chi tiết đơn hàng</span></button>
+                <div id="modal-message">
+                    <h3>Thành công!</h3>
+                    <p>Đơn hàng của bạn đang được xử lí.</p>
+                </div>
+                <a id="modal-btn" class="btn btn-success" href="" ></a>
             </div>
         </div>
     </div>
@@ -123,15 +125,26 @@
             success: function (response) {
                 if (response.success){
                     $("#cart-body").load(location.href + " #cart-body");
-                    $("#myModal").modal('show');
+                    $("#modal-btn").text("Xem danh sách đơn hàng của tôi");
+                    $("#modal-btn").attr("href", "{% url 'order-list' %}");
+
 
                 }
                 else if(response.message == "EMPTY_CART"){
-                    $(".modal-body").html("<h3> Thất bại </h3><p> Giỏ hàng trống </p>");
-
+                    $("#modal-message").html("<h2> Thất bại </h2><p> Giỏ hàng trống </p>");
+                    $("#modal-btn").text("Chọn món ăn");
+                    $("#modal-btn").attr("href", "/#food");
+                }
+                else if(response.message == "LOGIN_REQUIRED"){
+                    $("#modal-message").html("<p> Vui lòng đăng nhập </p>");
+                    $("#modal-btn").text("Đăng nhập");
+                    $("#modal-btn").attr("href", "{% url 'login' %}?next=" + location.href);
+                    //document.location.href = "{% url 'login' %}?next=" + location.href;
                 }
                 else{
-                    $(".modal-body").html("<h3> Thất bại </h3><p> Thanh toán không hoàn tất </p>");
+                    $("#modal-message").html("<h3> Thất bại </h3><p> Thanh toán không hoàn tất </p>");
+                    $("#modal-btn").text("Quay lại");
+                    $("#modal-btn").attr("href", location.href);
                 }
                 $("#myModal").modal('show');
             },
