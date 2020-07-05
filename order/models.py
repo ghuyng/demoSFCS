@@ -20,9 +20,9 @@ class OrderItem(models.Model):
 # StoreOrder object consists of many OrderItem objects from the same store
 # this type of order is sent and store to its store
 
-class Status(models.IntegerChoices):
-    PROCESSING = 0
-    COMPLETED = 1
+class Status(models.TextChoices):
+    PROCESSING = 'P'
+    COMPLETED = 'C'
 
 
 class StoreOrder(models.Model):
@@ -33,7 +33,7 @@ class StoreOrder(models.Model):
     )
     order = models.ForeignKey('Order', on_delete = models.CASCADE)
 
-    status = models.IntegerField(choices=Status.choices, default=Status.PROCESSING)
+    status = models.CharField(choices=Status.choices, default=Status.PROCESSING, max_length = 2)
 
     def getTotal(self):
         total = 0
@@ -67,4 +67,4 @@ class Order(models.Model):
 
 
     def __str__(self):
-        return 'Order ID : {} of user : {}'.format(self.id, self.customer.username)
+        return 'Order ID : {} --- Time : {}'.format(self.id, self.date_created.strftime("%d-%m-%Y %H:%M:%S"))

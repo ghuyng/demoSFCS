@@ -15,6 +15,17 @@
             <ul class="list-unstyled">
                 <li> Mã đơn hàng : {{order.id}}</li>
                 <li> Người dùng : {{ order.customer.username }}</li>
+                <li> Ngày mua : {{ order.date_created|date:'d/m/Y H:i:s' }}</li>
+                <li> Trạng thái đơn hàng : {{ status }} </li>
+                <li> Danh sách sản phẩm : </li>
+                <ul class="list-unstyled">
+                    {% for item in item_list %}
+                        <li> {{ item.product.name }} , số lượng : {{ item.quantity }}, giá : {{ item.paid_price }}</li>
+                    {% endfor %}
+
+                </ul>
+
+                <li> Thành tiền : {{ total }}</li>
             </ul>
         </div>
     </div>

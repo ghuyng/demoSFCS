@@ -40,11 +40,18 @@ def makeOrder(request):
 
 @login_required
 def viewOrderList(request):
-    order_list = request.user.order_set.all()
+    order_list = request.user.order_set.all().order_by('-date_created')
     return render(request, 'user_orderlist.html', {'order_list': order_list})
 
 
 @login_required
 def viewOrderByID(request, order_id):
     order = get_object_or_404(Order, id=order_id)
-    return render(request, 'order.html', {'order': order})
+    item_list = [order_item for store_order in order.storeorder_set.all()
+                for order_item in store_order.orderitem_set.all()]
+    status = order.getStatus().label
+    total = order.getTotal()
+    return render(request, 'order.html', {'order': order,
+                                          'item_list' : item_list,
+                                          'status' : status,
+                                          'total' : total})
