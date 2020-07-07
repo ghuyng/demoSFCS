@@ -9,9 +9,7 @@ class FoodInLine(admin.TabularInline):
     extra = 1
 
 class StoreAdmin(admin.ModelAdmin):
-    fieldsets = [
-        (None, {'fields': ['name']}),
-        ]
+
     inlines = [FoodInLine]
 
 admin.site.register(Store, StoreAdmin)

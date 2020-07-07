@@ -6,8 +6,17 @@
 
 {% block content %}
 {% load humanize %}
-{% for store in store_list %}
-<a href="{% url 'user-store-view' store.id %}"> {{store}} </a>
-<br>
-{% endfor %}
+
+<div class="container store-list">
+    {% for store in store_list %}
+   <div class="media">
+      <img src="{{ store.store_img }}" class="align-self-center mr-3" alt={{store.name}} width="220px" height="200px">
+      <div class="media-body">
+          <h5 class="mt-0"> <a href="/store/{{store.id}}">{{store.name}}</a> </h5>
+        {{store.description}}
+      </div>
+    </div>
+    {% endfor %}
+</div>
+
 {% endblock %}
