@@ -10,3 +10,4 @@ Current working site:
 Changelog: 2020.11.07  4:00
 - Translate some html files from Eng to Vie
 - Remove "Đơn hàng của tôi" button and move it to menu bar named "Đơn hàng"
+- Resize margins of some html files
