@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'order.apps.OrderConfig',
     'store.apps.StoreConfig',
     'cart.apps.CartConfig',
+    'FoodCourtManager',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Store
+{% endblock %}
+
+{% block content %}
+{% load humanize %}
+
+{% if user.username %}
+<form action="{% url 'foodcourt-manager-view' %}" method="post">
+    {% csrf_token %}
+    {{Form}}
+    <input type="submit" value="Thêm cửa hàng">
+</form>
+
+{% endif %}
+
+{% endblock %}
