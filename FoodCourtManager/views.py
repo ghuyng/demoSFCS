@@ -9,9 +9,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 def FoodCourtView(request):
-    store_list = Store.objects.all()
-    context = {'store_list': store_list}
-    return render(request, 'foodcourt_managerview.html', context)
+    if request.user.has_perm('store.add_store'):
+        store_list = Store.objects.all()
+        context = {'store_list': store_list}
+        return render(request, 'foodcourt_managerview.html', context)
+    else:
+        return HttpResponse('Bạn không có quyền thực hiện chức năng này')
 
 class AddStoreView(LoginRequiredMixin, View):
     login_url = '/accounts/login/'
