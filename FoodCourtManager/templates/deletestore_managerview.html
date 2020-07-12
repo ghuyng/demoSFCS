@@ -12,10 +12,10 @@ Store
 {% endif %}
 
 {% if user.username %}
-<form action="{% url 'foodcourtmanager:add-food-court' %}" method="post">
+<form action='.' method="post">
     {% csrf_token %}
-    {{Form}}
-    <input type="submit" value="Thêm cửa hàng">
+    <h1>Bạn có chắc chắn xóa cửa hàng "{{store.name}}" ?</h1>
+    <p><input type="submit" value="Yes"> <a href="../">Cancel</a></p>
 </form>
 
 {% endif %}
