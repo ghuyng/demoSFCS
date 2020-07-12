@@ -12,8 +12,9 @@ Store
    <div class="media">
       <img src="{{ store.store_img }}" class="align-self-center mr-3" alt={{store.name}} width="220px" height="200px">
       <div class="media-body">
-          <h5 class="mt-0"> <a href="/store/{{store.id}}"> <br>{{store.name}}</a> </h5>
+          <h5 class="mt-0"> <a href="/foodcourtmanager/{{store.id}}"> <br>{{store.name}}</a> </h5>
           <ul> {{store.description}}  </ul>
+          <h5 class="mt-0"> <a href="/foodcourtmanager/{{store.id}}/delete"> <br>Xóa cửa hàng</a> </h5>
       </div>
     </div>
     {% endfor %}

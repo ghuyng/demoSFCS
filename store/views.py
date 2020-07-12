@@ -16,5 +16,5 @@ def userStoreView(request, store_id):
     store = get_object_or_404(Store, id=store_id)
     menu = [food for food in store.food_set.all()]
 
-    return render(request, 'store_userview.html', {'store': store, 'menu' : menu,})
+    return render(request, 'store_userview.html', {'store': store, 'menu' : menu})
 
