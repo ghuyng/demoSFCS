@@ -1,23 +1,16 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Store
+Delete Store
 {% endblock %}
 
 {% block content %}
 {% load humanize %}
 
-{% if not user.username %}
-<h1>Đăng nhập để tiếp tục</h1>
-{% endif %}
-
-{% if user.username %}
 <form action='.' method="post">
     {% csrf_token %}
     <h1>Bạn có chắc chắn xóa cửa hàng "{{store.name}}" ?</h1>
-    <p><input type="submit" value="Yes"> <a href="../">Cancel</a></p>
+    <p><input type="submit" value="Yes"> <a href="/foodcourtmanager">Cancel</a></p>
 </form>
-
-{% endif %}
 
 {% endblock %}

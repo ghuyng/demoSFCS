@@ -5,6 +5,7 @@ from store.models import Store
 from .forms import StoreForm
 from django.views.generic import DeleteView, DetailView
 from django.urls import reverse
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 def FoodCourtView(request):
@@ -12,7 +13,9 @@ def FoodCourtView(request):
     context = {'store_list': store_list}
     return render(request, 'foodcourt_managerview.html', context)
 
-class AddStoreView(View):
+class AddStoreView(LoginRequiredMixin, View):
+    login_url = '/accounts/login/'
+
     def get(self, request):
         Form = StoreForm()
         return render(request, 'addstore_managerview.html', {'Form':Form})
@@ -28,8 +31,9 @@ class AddStoreView(View):
         return HttpResponse('Thêm mới thành công')
         #return HttpResponseRedirect(reverse('foodcourtmanager:food-court-view'))
 
-class DeleteStoreView(DeleteView):
+class DeleteStoreView(LoginRequiredMixin,DeleteView):
     template_name = 'deletestore_managerview.html'
+    login_url = '/accounts/login/'
 
     def get_object(self):
         if self.request.user.has_perm('store.delete_store'):
