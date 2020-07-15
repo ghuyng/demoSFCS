@@ -7,13 +7,11 @@ Add Store
 {% block content %}
 {% load humanize %}
 
-{% if user.username %}
 <form action="{% url 'foodcourtmanager:add-food-court' %}" method="post">
     {% csrf_token %}
     {{Form.as_p}}
     <input type="submit" value="Add">
 </form>
 
-{% endif %}
 
 {% endblock %}

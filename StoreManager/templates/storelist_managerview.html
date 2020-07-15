@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}
+ManageStore
+{% endblock %}
+
+{% block content %}
+{% load humanize %}
+
+<div class="container store-list">
+    <div class="column">
+        {% for store in store_list %}
+        <div class="card border border-dark" >
+            <div class="card-body">
+              <div class="media">
+                <img src="{{ store.store_img }}" class="align-self-center mr-3" alt={{store.name}} width="220px" height="200px">
+                <div class="media-body">
+                  <h5 class="mt-0"> <a href="/storemanager/{{store.id}}"> <br>{{store.name}}</a> </h5>
+                  <ul> {{store.description}}  </ul>
+
+                  <a href="/storemanager/{{store.id}}/update" class="btn btn-primary"> Edit </a>
+              </div>
+            </div>
+
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
