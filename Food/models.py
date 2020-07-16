@@ -1,5 +1,6 @@
 from django.db import models
 from store.models import Store
+from django.urls import reverse
 
 # Create your models here.
 class Food(models.Model):

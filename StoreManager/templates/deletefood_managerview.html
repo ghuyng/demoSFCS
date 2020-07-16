@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 
 {% block title %}
-DeleteStore
+Delete Store
 {% endblock %}
 
 {% block content %}
 {% load humanize %}
 
-<form action='.' method="post">
+<form action='.' method="POST">
     {% csrf_token %}
-    <h1>Bạn có chắc chắn xóa cửa hàng "{{store.name}}" ?</h1>
+    <h1>Bạn có chắc chắn xóa món "{{food.name}}" ?</h1>
     <p><input type="submit" value="Yes"> <input type="button" value="Cancal" onclick="history.back()"></p>
 </form>
 

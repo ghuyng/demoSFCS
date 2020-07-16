@@ -32,8 +32,7 @@ class AddStoreView(View):
             Form.save()
         else:
             return HttpResponse('Bạn không có quyền thực hiện chức năng này')
-        return HttpResponse('Thêm mới thành công')
-        #return HttpResponseRedirect(reverse('foodcourtmanager:food-court-view'))
+        return HttpResponseRedirect(reverse('foodcourtmanager:food-court-view'))
 
 class DeleteStoreView(DeleteView):
     template_name = 'deletestore_managerview.html'

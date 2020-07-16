@@ -5,6 +5,7 @@
 {% block content %}
 {% load humanize %}
 
+<p><a href="/storemanager/{{store.id}}/add" class="btn btn-success" > Add Food </a></p>
 
 <!-- Product grid -->
 <div class="w3-row mt-2">
@@ -14,15 +15,13 @@
             <div class="w3-display-container">
                 <a href="{% url 'view_food_info' food.id %}">
                     <img src={{food.imgURL}} width="250px" height="200px">
-                    <span class="w3-tag w3-display-topleft">Mới</span>
                     {% if food.stock %}
-                    <div class="w3-display-middle w3-display-hover">
-                        <button class="w3-button w3-black">Thông tin <i class="fa fa-shopping-cart"></i></button>
-                    </div>
                     <p>{{food.name}}<br><b>{{food.price|intcomma}} VNĐ</b></p>
                     {% else %}
                     <p>{{food.name}}<br><b> Hết hàng </b></p>
                     {% endif %}
+                    <a href="/storemanager/{{store.id}}/edit/{{food.id}}/update" class="btn btn-primary"> Edit </a>
+                    <a href="/storemanager/{{store.id}}/edit/{{food.id}}/delete" class="btn btn-secondary"> Delete </a>
                 </a>
             </div>
 

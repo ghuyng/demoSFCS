@@ -1,17 +1,14 @@
 {% extends 'base.html' %}
 
-{% block title %}
-AddStore
-{% endblock %}
+{% block title %}AddStore{% endblock %}
 
 {% block content %}
 {% load humanize %}
 
-<form action="{% url 'foodcourtmanager:add-food-court' %}" method="post">
+<form class="site-form" action="{% url 'storemanager:add-food' store.id %}" method="POST">
     {% csrf_token %}
-    {{Form.as_p}}
+    {{form.as_p}}
     <p><input type="submit" value="Add"> <input type="button" value="Cancal" onclick="history.back()"></p>
 </form>
-
 
 {% endblock %}
