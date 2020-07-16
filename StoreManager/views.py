@@ -3,8 +3,7 @@ from django.views import View
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from store.models import Store
 from Food.models import Food
-from FoodCourtManager.forms import StoreForm
-from .forms import FoodForm
+from .forms import FoodForm, StoreOwnerForm
 from django.urls import reverse
 from django.views.generic import DeleteView, DetailView, CreateView, UpdateView
 from django.contrib.auth.decorators import login_required
@@ -13,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 @login_required(login_url='/accounts/login/')
 def ManageStoreView(request):
     if request.user.has_perm('Food.add_food'):
-        store_list = Store.objects.all()
+        store_list = Store.objects.filter(owner=request.user)
         context = {'store_list': store_list}
         return render(request, 'storelist_managerview.html', context)
     else:
@@ -27,11 +26,11 @@ def ManageStore(request, store_id):
 
 def UpdateStore(request, store_id):
     store = get_object_or_404(Store, id=store_id)
-    form = StoreForm(instance=store)
+    form = StoreOwnerForm(instance=store)
 
     if request.method == 'POST':
         store = get_object_or_404(Store, id=store_id)
-        form = StoreForm(request.POST)
+        form = StoreOwnerForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data.get('name')
             description = form.cleaned_data.get('description')

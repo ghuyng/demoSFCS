@@ -17,6 +17,7 @@ ManageFoodCourt
                 <img src="{{ store.store_img }}" class="align-self-center mr-3" alt={{store.name}} width="280px" height="200px">
                 <div class="media-body">
                   <h5 class="mt-0">{{store.name}}</h5>
+                  <h5 class="mt-0">Chủ cửa hàng: {{store.owner}}</h5>
                   <ul> {{store.description}}  </ul>
 
                   <a href="/foodcourtmanager/{{store.id}}/delete" class="btn btn-secondary"> Xóa cửa hàng </a>
