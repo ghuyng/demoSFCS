@@ -21,9 +21,14 @@ def ManageStoreView(request):
 @login_required(login_url='/accounts/login/')
 def ManageStore(request, store_id):
     store = get_object_or_404(request.user.store_set.all(), id=store_id)
+    return render(request, 'store_managerview.html', {'store': store})
+
+@login_required(login_url='/accounts/login/')
+def ManageStoreMenu(request, store_id):
+    store = get_object_or_404(request.user.store_set.all(), id=store_id)
     menu = [food for food in store.food_set.all()]
 
-    return render(request, 'editstore_managerview.html', {'store': store, 'menu': menu})
+    return render(request, 'editmenu_managerview.html', {'store': store, 'menu': menu})
 
 @login_required(login_url='/accounts/login/')
 def UpdateStore(request, store_id):

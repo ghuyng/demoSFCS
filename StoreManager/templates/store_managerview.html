@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Manage Store{% endblock %}
+
+{% block content %}
+{% load humanize %}
+
+<p>
+   <a href="{% url 'storemanager:edit-menu' store.id %}" class="btn btn-primary"> Danh sách món ăn </a>
+</p>
+
+<p>
+    <a href="#" class="btn btn-primary"> Danh sách đơn hàng </a>
+</p>
+
+<p>
+    <a href="#" class="btn btn-primary"> Báo cáo kinh doanh </a>
+</p>
+
+
+{% endblock %}
