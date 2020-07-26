@@ -12,24 +12,26 @@ from django.contrib.auth.decorators import login_required
 @login_required(login_url='/accounts/login/')
 def ManageStoreView(request):
     if request.user.has_perm('Food.add_food'):
-        store_list = Store.objects.filter(owner=request.user)
+        store_list = request.user.store_set.all()
         context = {'store_list': store_list}
         return render(request, 'storelist_managerview.html', context)
     else:
         return HttpResponse('Bạn không có quyền thực hiện chức năng này')
 
+@login_required(login_url='/accounts/login/')
 def ManageStore(request, store_id):
-    store = get_object_or_404(Store, id=store_id)
+    store = get_object_or_404(request.user.store_set.all(), id=store_id)
     menu = [food for food in store.food_set.all()]
 
     return render(request, 'editstore_managerview.html', {'store': store, 'menu': menu})
 
+@login_required(login_url='/accounts/login/')
 def UpdateStore(request, store_id):
-    store = get_object_or_404(Store, id=store_id)
+    store = get_object_or_404(request.user.store_set.all(), id=store_id)
     form = StoreOwnerForm(instance=store)
 
     if request.method == 'POST':
-        store = get_object_or_404(Store, id=store_id)
+        store = get_object_or_404(request.user.store_set.all(), id=store_id)
         form = StoreOwnerForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data.get('name')
@@ -44,6 +46,7 @@ def UpdateStore(request, store_id):
 
     return render(request, 'update_managerview.html', {'form': form})
 
+@login_required(login_url='/accounts/login/')
 def UpdateFood(request, food_id, store_id):
     food = get_object_or_404(Food, id=food_id)
     form = FoodForm(instance=food)
@@ -66,9 +69,10 @@ def UpdateFood(request, food_id, store_id):
 
     return render(request, 'update_managerview.html', {'form': form})
 
+@login_required(login_url='/accounts/login/')
 def AddFood(request, store_id):
     form = FoodForm()
-    store = get_object_or_404(Store, id=store_id)
+    store = get_object_or_404(request.user.store_set.all(), id=store_id)
 
     if request.method == 'POST':
         store = get_object_or_404(Store, id=store_id)
@@ -81,13 +85,16 @@ def AddFood(request, store_id):
 
     return render(request, 'addfood_managerview.html', {'form': form, 'store': store})
 
+#@login_required(login_url='/accounts/login/')
 class DeleteFood(DeleteView):
     template_name = 'deletefood_managerview.html'
 
     def get_object(self):
         if self.request.user.has_perm('Food.delete_food'):
-            id_ = self.kwargs.get("food_id")
-            return get_object_or_404(Food, id=id_)
+            store_id = self.kwargs.get("store_id")
+            food_id = self.kwargs.get("food_id")
+            store =  get_object_or_404(self.request.user.store_set.all(), id=store_id)
+            return get_object_or_404(store.food_set.all(), id=food_id)
         else:
             raise Http404("Bạn không có quyền thực hiện chức năng này.")
 
