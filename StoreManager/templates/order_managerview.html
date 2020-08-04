@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Store Order{% endblock %}
+<style>
+        a {text-decoration : none;}
+
+    </style>
+{% block content %}
+{% load humanize %}
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th scope="col">Order ID</th>
+        <th scope="col">Trạng thái</th>
+        <th scope="col">Thời gian đặt</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for store_order in processing_orders %}
+    <tr>
+        <th scope="row">{{store_order.id}}</th>
+        <td>{{store_order.status}}</td>
+        <td>{{ store_order.order.date_created|date:'d/m/Y H:i:s' }}</td>
+        <td>
+            <a style="text-decoration:underline;" data-toggle="collapse" href="#order_detail_{{store_order.id}}" role="button"
+               aria-expanded="false" aria-controls="#order_detail_{{store_order.id}}">
+                Xem chi tiết
+            </a>
+        </td>
+
+    </tr>
+    <tr class="collapse" id="order_detail_{{store_order.id}}">
+        <td colspan="4">
+            <div>
+                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil
+                anim
+                keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+            </div>
+        </td>
+    </tr>
+    {% endfor %}
+
+    </tbody>
+</table>
+
+
+{% endblock %}

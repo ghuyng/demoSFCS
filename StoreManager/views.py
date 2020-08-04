@@ -86,7 +86,7 @@ def AddFood(request, store_id):
             instance = form.save(commit=False)
             instance.store = store
             instance.save()
-            return HttpResponseRedirect(reverse('storemanager:edit-store', args=(store_id,)))
+            return HttpResponseRedirect(reverse('storemanager:edit-menu', args=(store_id,)))
 
     return render(request, 'addfood_managerview.html', {'form': form, 'store': store})
 
@@ -105,14 +105,15 @@ class DeleteFood(DeleteView):
 
     def get_success_url(self):
         store_id = self.kwargs.get("store_id")
-        return reverse('storemanager:edit-store', args=(store_id,))
+        return reverse('storemanager:edit-menu', args=(store_id,))
 
 
 @login_required(login_url='/accounts/login/')
 def get_store_order(request, store_id):
-    group = Group.objects.get(name='store_owner')
-    if group in request.user.groups.all():
-        store = get_object_or_404(self.request.user.store_set.all(), id=store_id)
+    #group = Group.objects.get(name='store_owner')
+    #if group in request.user.groups.all():
+    if request.user.has_perm('Food.delete_food'):
+        store = get_object_or_404(request.user.store_set.all(), id=store_id)
         completed_orders = store.storeorder_set.filter(status='C')
         processing_orders = store.storeorder_set.filter(status='P')
         return render(request, 'order_managerview.html', {'completed_orders' : completed_orders,
