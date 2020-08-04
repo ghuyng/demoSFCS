@@ -49,9 +49,10 @@ def viewCart(request):
         food = Food.objects.get(id=food_id)
         cart.append((food, quantity))
         total += food.price * quantity
-        price = round(total / 23000, 2)
 
-    return render(request, 'cart.html', {'cart': cart, 'total' : total, 'price' : price})
+    total_in_USD = round(total / 23000, 2)
+
+    return render(request, 'cart.html', {'cart': cart, 'total' : total, 'total_in_USD' : total_in_USD})
 
 
 def removeFromCart(request):
