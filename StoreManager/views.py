@@ -106,3 +106,17 @@ class DeleteFood(DeleteView):
     def get_success_url(self):
         store_id = self.kwargs.get("store_id")
         return reverse('storemanager:edit-store', args=(store_id,))
+
+
+@login_required(login_url='/accounts/login/')
+def get_store_order(request, store_id):
+    group = Group.objects.get(name='store_owner')
+    if group in request.user.groups.all():
+        store = get_object_or_404(self.request.user.store_set.all(), id=store_id)
+        completed_orders = store.storeorder_set.filter(status='C')
+        processing_orders = store.storeorder_set.filter(status='P')
+        return render(request, 'order_managerview.html', {'completed_orders' : completed_orders,
+                                                          'processing_orders' : processing_orders,})
+
+    else:
+        raise Http404("Bạn không có quyền thực hiện chức năng này")
