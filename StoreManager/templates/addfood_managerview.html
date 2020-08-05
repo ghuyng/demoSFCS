@@ -8,7 +8,7 @@
 <form class="site-form" action="{% url 'storemanager:add-food' store.id %}" method="POST">
     {% csrf_token %}
     {{form.as_p}}
-    <p><input type="submit" value="Add"> <input type="button" value="Cancal" onclick="history.back()"></p>
+    <p><input type="submit" value="Thêm"> <input type="button" value="Hủy bỏ" onclick="history.back()"></p>
 </form>
 
 {% endblock %}

@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+{% block title %}Search{% endblock %}
+
+{% block content %}
+{% load humanize %}
+
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body {font-family: "Lato", sans-serif}
+.mySlides {display: none}
+</style>
+<body>
+
+
+<!-- Page content -->
+<div class="w3-content" style="max-width:2000px;margin-top:46px">
+
+  <!-- Automatic Slideshow Images -->
+  <div class="mySlides w3-display-container w3-center">
+    <img src="https://1.bp.blogspot.com/-kDIbS8gwx_o/XyqxElqcgCI/AAAAAAAARZI/7BYH4ZP-wXM1dgzZzJF7_BtxYhaanuh4gCLcBGAsYHQ/s1600/heroic-debuggers.png?fbclid=IwAR23h3wGCbBTwwbw4GJe5H_AD7MrDag2VhcYY_CuOGDcxzQ46UHlZJnTi-8" style="width:10%">
+    <div class="w3-display-bottommiddle w3-container w3-text-white w3-padding-32 w3-hide-small">
+    </div>
+  </div>
+
+  <!-- The Heroic Debugs Section -->
+  <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="band">
+    <h2 class="w3-wide">HEROIC DEBUGGERS</h2>
+    <p class="w3-opacity"><i>Thức đêm debug để có ngày thành công</i></p>
+    <p class="w3-center">Trang web này là sự đóng góp của các thành viên cốt lỗi của team Heroic Debuggers chúng tôi. Chúc các bạn có những giờ phút thư giãn với các món ăn trên trang web này!</p>
+    <div class="w3-row w3-padding-32">
+      <div class="w3-third">
+        <p>Lê Trung Đan</p>
+        <img src="https://scontent.fsgn2-3.fna.fbcdn.net/v/t1.0-9/26196317_1999355173636497_3673295935159012539_n.jpg?_nc_cat=108&_nc_sid=85a577&_nc_ohc=F94eyyp6BKYAX8M7Dz2&_nc_oc=AQlLHvGhGQnzMznvgOxk2w68pNMoWN4id5W2RMGL76hQE1vjDquBUtBUfcs7lBR734g&_nc_ht=scontent.fsgn2-3.fna&oh=949d9847e9232d28dda18f3c567c3e35&oe=5F4F62EA" class="w3-round w3-margin-bottom" alt="Random Name" style="width:60%">
+      </div>
+      <div class="w3-third">
+        <p>Lê Đức Huy</p>
+        <img src="https://scontent.fsgn2-6.fna.fbcdn.net/v/t1.0-9/13567239_119197165177308_6105858327876385769_n.jpg?_nc_cat=110&_nc_sid=85a577&_nc_ohc=u4b9VvRRfjkAX9OAA2a&_nc_ht=scontent.fsgn2-6.fna&oh=fcc8b037a1a2b3161ca39000759bb7bc&oe=5F520A81" class="w3-round w3-margin-bottom" alt="Random Name" style="width:60%">
+      </div>
+      <div class="w3-third">
+        <p>Nguyễn Gia Huy</p>
+        <img src="https://scontent.fsgn2-6.fna.fbcdn.net/v/t1.0-9/36087602_871894163021610_296060878921400320_n.jpg?_nc_cat=100&_nc_sid=85a577&_nc_ohc=ZCeTzwVeK3oAX-6i0Bn&_nc_ht=scontent.fsgn2-6.fna&oh=78aa032ca0112f2f0be2fc067820f58c&oe=5F50991A" class="w3-round" alt="Random Name" style="width:60%">
+      </div>
+        <div class="w3-third">
+        <p>Đỗ Lê Quang Trung</p>
+        <img src="https://scontent.fsgn2-1.fna.fbcdn.net/v/t1.0-9/39293_351290214992148_189838070_n.jpg?_nc_cat=107&_nc_sid=85a577&_nc_ohc=R8m7rlrVIx8AX92LgWB&_nc_ht=scontent.fsgn2-1.fna&oh=0e104fa1464f2a1ab1bab0d9d2e4f346&oe=5F5018BB" class="w3-round" alt="Random Name" style="width:60%">
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Ticket Modal -->
+  <div id="ticketModal" class="w3-modal">
+    <div class="w3-modal-content w3-animate-top w3-card-4">
+      <header class="w3-container w3-teal w3-center w3-padding-32">
+        <span onclick="document.getElementById('ticketModal').style.display='none'"
+       class="w3-button w3-teal w3-xlarge w3-display-topright">×</span>
+        <h2 class="w3-wide"><i class="fa fa-suitcase w3-margin-right"></i>Tickets</h2>
+      </header>
+      <div class="w3-container">
+        <p><label><i class="fa fa-shopping-cart"></i> Tickets, $15 per person</label></p>
+        <input class="w3-input w3-border" type="text" placeholder="How many?">
+        <p><label><i class="fa fa-user"></i> Send To</label></p>
+        <input class="w3-input w3-border" type="text" placeholder="Enter email">
+        <button class="w3-button w3-block w3-teal w3-padding-16 w3-section w3-right">PAY <i class="fa fa-check"></i></button>
+        <button class="w3-button w3-red w3-section" onclick="document.getElementById('ticketModal').style.display='none'">Close <i class="fa fa-remove"></i></button>
+        <p class="w3-right">Need <a href="#" class="w3-text-blue">help?</a></p>
+      </div>
+    </div>
+  </div>
+
+
+
+<!-- End Page Content -->
+</div>
+
+<!-- Image of location/map -->
+<img src="/w3images/map.jpg" class="w3-image w3-greyscale-min" style="width:100%">
+
+<!-- Footer -->
+<footer class="w3-container w3-padding-64 w3-center w3-opacity w3-light-grey w3-xlarge">
+  <i class="fa fa-facebook-official w3-hover-opacity"></i>
+  <i class="fa fa-instagram w3-hover-opacity"></i>
+  <i class="fa fa-snapchat w3-hover-opacity"></i>
+  <i class="fa fa-pinterest-p w3-hover-opacity"></i>
+  <i class="fa fa-twitter w3-hover-opacity"></i>
+  <i class="fa fa-linkedin w3-hover-opacity"></i>
+  <p class="w3-medium">Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+</footer>
+
+<script>
+// Automatic Slideshow - change image every 4 seconds
+var myIndex = 0;
+carousel();
+
+function carousel() {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+  }
+  myIndex++;
+  if (myIndex > x.length) {myIndex = 1}
+  x[myIndex-1].style.display = "block";
+  setTimeout(carousel, 4000);
+}
+
+// Used to toggle the menu on small screens when clicking on the menu button
+function myFunction() {
+  var x = document.getElementById("navDemo");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else {
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+
+// When the user clicks anywhere outside of the modal, close it
+var modal = document.getElementById('ticketModal');
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+
+</body>
+{% endblock %}

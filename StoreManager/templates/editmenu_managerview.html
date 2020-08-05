@@ -5,7 +5,7 @@
 {% block content %}
 {% load humanize %}
 
-<p><a href="/storemanager/{{store.id}}/add" class="btn btn-success" > Add Food </a></p>
+<p><a href="/storemanager/{{store.id}}/add" class="btn btn-success" > Thêm món ăn </a></p>
 
 <!-- Product grid -->
 <div class="w3-row mt-2">
@@ -20,8 +20,8 @@
                     {% else %}
                     <p>{{food.name}}<br><b> Hết hàng </b></p>
                     {% endif %}
-                    <a href="/storemanager/{{store.id}}/edit/{{food.id}}/update" class="btn btn-primary"> Edit </a>
-                    <a href="/storemanager/{{store.id}}/edit/{{food.id}}/delete" class="btn btn-secondary"> Delete </a>
+                    <a href="/storemanager/{{store.id}}/edit/{{food.id}}/update" class="btn btn-primary"> Chỉnh sửa </a>
+                    <a href="/storemanager/{{store.id}}/edit/{{food.id}}/delete" class="btn btn-secondary"> Xóa </a>
                 </a>
             </div>
 

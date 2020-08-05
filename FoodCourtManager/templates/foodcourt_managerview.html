@@ -6,7 +6,7 @@ ManageFoodCourt
 
 {% block content %}
 {% load humanize %}
-<p><a href="/foodcourtmanager/add" class="btn btn-success"> Thêm cửa hàng </a></p>
+<p align='center'><a href="/foodcourtmanager/add" class="btn btn-success"> Thêm cửa hàng </a></p>
 
 <div class="container store-list">
     <div class="column">
@@ -21,12 +21,12 @@ ManageFoodCourt
                   <ul> {{store.description}}  </ul>
 
                   <a href="/foodcourtmanager/{{store.id}}/delete" class="btn btn-secondary"> Xóa cửa hàng </a>
+                </div>
               </div>
-            </div>
 
+            </div>
         </div>
-    </div>
-    {% endfor %}
+        {% endfor %}
     </div>
 </div>
 {% endblock %}
