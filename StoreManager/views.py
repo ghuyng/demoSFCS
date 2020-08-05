@@ -70,7 +70,7 @@ def UpdateFood(request, food_id, store_id):
             food.imgURL = imgURL
             food.stock = stock
             food.save()
-            return HttpResponseRedirect(reverse('storemanager:edit-store', args=(store_id,)))
+            return HttpResponseRedirect(reverse('storemanager:edit-menu', args=(store_id,)))
 
     return render(request, 'update_managerview.html', {'form': form})
 
@@ -86,7 +86,7 @@ def AddFood(request, store_id):
             instance = form.save(commit=False)
             instance.store = store
             instance.save()
-            return HttpResponseRedirect(reverse('storemanager:edit-store', args=(store_id,)))
+            return HttpResponseRedirect(reverse('storemanager:edit-menu', args=(store_id,)))
 
     return render(request, 'addfood_managerview.html', {'form': form, 'store': store})
 
@@ -105,4 +105,4 @@ class DeleteFood(DeleteView):
 
     def get_success_url(self):
         store_id = self.kwargs.get("store_id")
-        return reverse('storemanager:edit-store', args=(store_id,))
+        return reverse('storemanager:edit-menu', args=(store_id,))
