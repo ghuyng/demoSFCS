@@ -42,7 +42,8 @@
                             </a>
                         </td>
                         <td>
-                            <a class="btn btn-primary" href="#">
+                            <a class="btn btn-primary"
+                               href="{% url 'storemanager:storeorder-completed' store_order.store.id store_order.id %}">
                                 Thông báo hoàn tất
                             </a>
                         </td>
@@ -66,7 +67,7 @@
                         </td>
 
                     </tr>
-                    {%endfor%}
+                    {% endfor %}
                     {% endfor %}
 
                     </tbody>
@@ -111,11 +112,7 @@
                                 Xem chi tiết
                             </a>
                         </td>
-                        <td>
-                            <a class="btn btn-primary" href="#">
-                                Thông báo hoàn tất
-                            </a>
-                        </td>
+                        <td></td>
 
                     </tr>
                     {% for order_item in order_item_list %}
@@ -136,7 +133,7 @@
                         </td>
 
                     </tr>
-                    {%endfor%}
+                    {% endfor %}
                     {% endfor %}
 
                     </tbody>

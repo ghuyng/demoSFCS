@@ -7,11 +7,13 @@ from .forms import FoodForm, StoreOwnerForm
 from django.urls import reverse
 from django.views.generic import DeleteView, DetailView, CreateView, UpdateView
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group
 
 # Create your views here.
 @login_required(login_url='/accounts/login/')
 def ManageStoreView(request):
-    if request.user.has_perm('Food.add_food'):
+    group = Group.objects.get(name='Store Owner')
+    if group in request.user.groups.all():
         store_list = request.user.store_set.all()
         context = {'store_list': store_list}
         return render(request, 'storelist_managerview.html', context)
@@ -110,9 +112,9 @@ class DeleteFood(DeleteView):
 
 @login_required(login_url='/accounts/login/')
 def get_store_order(request, store_id):
-    #group = Group.objects.get(name='store_owner')
-    #if group in request.user.groups.all():
-    if request.user.has_perm('Food.delete_food'):
+    group = Group.objects.get(name='Store Owner')
+    if group in request.user.groups.all():
+    #if request.user.has_perm('Food.delete_food'):
         store = get_object_or_404(request.user.store_set.all(), id=store_id)
         completed_orders = store.storeorder_set.filter(status='C')
         completed_orders = list(zip(completed_orders, [order.orderitem_set.all() for order in completed_orders]))
@@ -123,3 +125,6 @@ def get_store_order(request, store_id):
 
     else:
         raise Http404("Bạn không có quyền thực hiện chức năng này")
+
+def onStoreOrderCompleted(request, store_id, order_id):
+    pass
