@@ -1,48 +1,150 @@
 {% extends 'base.html' %}
 
 {% block title %}Store Order{% endblock %}
-<style>
-        a {text-decoration : none;}
 
-    </style>
 {% block content %}
 {% load humanize %}
-<table class="table table-hover">
-    <thead>
-    <tr>
-        <th scope="col">Order ID</th>
-        <th scope="col">Trạng thái</th>
-        <th scope="col">Thời gian đặt</th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for store_order in processing_orders %}
-    <tr>
-        <th scope="row">{{store_order.id}}</th>
-        <td>{{store_order.status}}</td>
-        <td>{{ store_order.order.date_created|date:'d/m/Y H:i:s' }}</td>
-        <td>
-            <a style="text-decoration:underline;" data-toggle="collapse" href="#order_detail_{{store_order.id}}" role="button"
-               aria-expanded="false" aria-controls="#order_detail_{{store_order.id}}">
-                Xem chi tiết
-            </a>
-        </td>
+<div class="accordion" id="accordionExample">
+    <div class="card">
+        <div class="card-header" id="headingOne">
+            <h2 class="mb-0">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                        data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <strong>Danh sách các đơn hàng đang được xử lí</strong>
+                </button>
+            </h2>
+        </div>
 
-    </tr>
-    <tr class="collapse" id="order_detail_{{store_order.id}}">
-        <td colspan="4">
-            <div>
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil
-                anim
-                keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">Order ID</th>
+                        <th scope="col"></th>
+                        <th scope="col">Thời gian đặt</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for store_order, order_item_list in processing_orders %}
+                    <tr>
+                        <th scope="row">{{store_order.id}}</th>
+                        <td></td>
+                        <td>{{ store_order.order.date_created|date:'d/m/Y H:i:s' }}</td>
+                        <td>
+                            <a style="text-decoration:underline;" data-toggle="collapse"
+                               href="#order_detail_{{store_order.id}}"
+                               role="button"
+                               aria-expanded="false" aria-controls="#order_detail_{{store_order.id}}">
+                                Xem chi tiết
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" href="#">
+                                Thông báo hoàn tất
+                            </a>
+                        </td>
+
+                    </tr>
+                    {% for order_item in order_item_list %}
+                    <tr class="collapse" id="order_detail_{{store_order.id}}">
+                        <td>
+                            <img src="{{ order_item.product.imgURL }}" class="mr-3" alt={{order_item.product.name}}
+                                 width="50px"
+                                 height="50px">
+                        </td>
+                        <td colspan="2">
+                            <h5>{{ order_item.product.name }}</h5>
+                        </td>
+                        <td>
+                            Số lượng : {{ order_item.quantity }}
+                        </td>
+                        <td>
+                            <strong>{{ order_item.product.price|intcomma }} VNĐ </strong>
+                        </td>
+
+                    </tr>
+                    {%endfor%}
+                    {% endfor %}
+
+                    </tbody>
+                </table>
             </div>
-        </td>
-    </tr>
-    {% endfor %}
+        </div>
+    </div>
 
-    </tbody>
-</table>
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+            <h2 class="mb-0">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                        data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                    <strong>Danh sách các đơn hàng đã hoàn tất</strong>
+                </button>
+            </h2>
+        </div>
+
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">Order ID</th>
+                        <th scope="col"></th>
+                        <th scope="col">Thời gian đặt</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for store_order, order_item_list in completed_orders %}
+                    <tr>
+                        <th scope="row">{{store_order.id}}</th>
+                        <td></td>
+                        <td>{{ store_order.order.date_created|date:'d/m/Y H:i:s' }}</td>
+                        <td>
+                            <a style="text-decoration:underline;" data-toggle="collapse"
+                               href="#order_detail_{{store_order.id}}"
+                               role="button"
+                               aria-expanded="false" aria-controls="#order_detail_{{store_order.id}}">
+                                Xem chi tiết
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" href="#">
+                                Thông báo hoàn tất
+                            </a>
+                        </td>
+
+                    </tr>
+                    {% for order_item in order_item_list %}
+                    <tr class="collapse" id="order_detail_{{store_order.id}}">
+                        <td>
+                            <img src="{{ order_item.product.imgURL }}" class="mr-3" alt={{order_item.product.name}}
+                                 width="50px"
+                                 height="50px">
+                        </td>
+                        <td colspan="2">
+                            <h5>{{ order_item.product.name }}</h5>
+                        </td>
+                        <td>
+                            Số lượng : {{ order_item.quantity }}
+                        </td>
+                        <td>
+                            <strong>{{ order_item.product.price|intcomma }} VNĐ </strong>
+                        </td>
+
+                    </tr>
+                    {%endfor%}
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 {% endblock %}

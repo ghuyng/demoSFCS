@@ -115,7 +115,9 @@ def get_store_order(request, store_id):
     if request.user.has_perm('Food.delete_food'):
         store = get_object_or_404(request.user.store_set.all(), id=store_id)
         completed_orders = store.storeorder_set.filter(status='C')
+        completed_orders = list(zip(completed_orders, [order.orderitem_set.all() for order in completed_orders]))
         processing_orders = store.storeorder_set.filter(status='P')
+        processing_orders = list(zip(processing_orders, [order.orderitem_set.all() for order in processing_orders]))
         return render(request, 'order_managerview.html', {'completed_orders' : completed_orders,
                                                           'processing_orders' : processing_orders,})
 
