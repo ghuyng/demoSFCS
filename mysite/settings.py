@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'cart.apps.CartConfig',
     'FoodCourtManager',
     'StoreManager.apps.StoremanagerConfig',
+    'notifications.apps.NotificationsConfig',
 ]
 
 MIDDLEWARE = [

@@ -21,18 +21,18 @@
                     <thead>
                     <tr>
                         <th scope="col">Order ID</th>
-                        <th scope="col"></th>
                         <th scope="col">Thời gian đặt</th>
-                        <th></th>
-                        <th></th>
+                        <th scope="col">Tổng giá trị</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
                     </tr>
                     </thead>
                     <tbody>
-                    {% for store_order, order_item_list in processing_orders %}
+                    {% for store_order, order_item_list, total in processing_orders %}
                     <tr>
                         <th scope="row">{{store_order.id}}</th>
-                        <td></td>
-                        <td>{{ store_order.order.date_created|date:'d/m/Y H:i:s' }}</td>
+                        <td><strong>{{ store_order.order.date_created|date:'d/m/Y H:i:s' }}</strong></td>
+                        <td><strong>{{ total|intcomma }}</strong></td>
                         <td>
                             <a style="text-decoration:underline;" data-toggle="collapse"
                                href="#order_detail_{{store_order.id}}"
@@ -42,10 +42,10 @@
                             </a>
                         </td>
                         <td>
-                            <a class="btn btn-primary"
-                               href="{% url 'storemanager:storeorder-completed' store_order.store.id store_order.id %}">
+                            <button class="btn btn-primary"
+                               onclick='onCompleted({{store_order.store.id}}, {{store_order.id}})'>
                                 Thông báo hoàn tất
-                            </a>
+                            </button>
                         </td>
 
                     </tr>
@@ -60,7 +60,7 @@
                             <h5>{{ order_item.product.name }}</h5>
                         </td>
                         <td>
-                            Số lượng : {{ order_item.quantity }}
+                            <strong>Số lượng : {{ order_item.quantity }}</strong>
                         </td>
                         <td>
                             <strong>{{ order_item.product.price|intcomma }} VNĐ </strong>
@@ -86,24 +86,23 @@
             </h2>
         </div>
 
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
             <div class="card-body">
                 <table class="table table-hover">
                     <thead>
                     <tr>
                         <th scope="col">Order ID</th>
-                        <th scope="col"></th>
                         <th scope="col">Thời gian đặt</th>
-                        <th></th>
-                        <th></th>
+                        <th scope="col">Tổng giá trị</th>
+                        <th scope="col"></th>
                     </tr>
                     </thead>
                     <tbody>
-                    {% for store_order, order_item_list in completed_orders %}
+                    {% for store_order, order_item_list, total in completed_orders %}
                     <tr>
                         <th scope="row">{{store_order.id}}</th>
-                        <td></td>
-                        <td>{{ store_order.order.date_created|date:'d/m/Y H:i:s' }}</td>
+                        <td><strong>{{ store_order.order.date_created|date:'d/m/Y H:i:s' }}</strong></td>
+                        <td><strong>{{ total|intcomma }}</strong></td>
                         <td>
                             <a style="text-decoration:underline;" data-toggle="collapse"
                                href="#order_detail_{{store_order.id}}"
@@ -112,7 +111,7 @@
                                 Xem chi tiết
                             </a>
                         </td>
-                        <td></td>
+
 
                     </tr>
                     {% for order_item in order_item_list %}
@@ -122,14 +121,14 @@
                                  width="50px"
                                  height="50px">
                         </td>
-                        <td colspan="2">
-                            <h5>{{ order_item.product.name }}</h5>
+                        <td>
+                            {{ order_item.product.name }}
                         </td>
                         <td>
                             Số lượng : {{ order_item.quantity }}
                         </td>
                         <td>
-                            <strong>{{ order_item.product.price|intcomma }} VNĐ </strong>
+                            {{ order_item.product.price|intcomma }} VNĐ
                         </td>
 
                     </tr>
@@ -143,5 +142,33 @@
     </div>
 </div>
 
+
+{% block javascript %}
+<script>
+    function onCompleted(store_id, order_id){
+        var mapID ={
+            1: store_id,
+            2: order_id
+        };
+        var _url = "{% url 'storemanager:storeorder-completed' 1 2 %}".replace(/1|2/gi, function(matched){
+            return mapID[matched];
+        });
+        $.ajax({
+            type : 'GET' ,
+            url : _url,
+
+            success: function(response){
+                $("#accordionExample").load(location.href + " #accordionExample");
+            },
+            error : function(response){
+                console.log(response);
+            },
+        });
+
+    }
+
+</script>
+
+{% endblock %}
 
 {% endblock %}

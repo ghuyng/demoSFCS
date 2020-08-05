@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
-from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.http import HttpResponse, HttpResponseRedirect, Http404, JsonResponse
 from store.models import Store
 from Food.models import Food
 from .forms import FoodForm, StoreOwnerForm
@@ -8,6 +8,9 @@ from django.urls import reverse
 from django.views.generic import DeleteView, DetailView, CreateView, UpdateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
+from order.models import Status
+from notifications.signals import store_completed_signal
+
 
 # Create your views here.
 @login_required(login_url='/accounts/login/')
@@ -20,10 +23,12 @@ def ManageStoreView(request):
     else:
         return HttpResponse('Bạn không có quyền thực hiện chức năng này')
 
+
 @login_required(login_url='/accounts/login/')
 def ManageStore(request, store_id):
     store = get_object_or_404(request.user.store_set.all(), id=store_id)
     return render(request, 'store_managerview.html', {'store': store})
+
 
 @login_required(login_url='/accounts/login/')
 def ManageStoreMenu(request, store_id):
@@ -31,6 +36,7 @@ def ManageStoreMenu(request, store_id):
     menu = [food for food in store.food_set.all()]
 
     return render(request, 'editmenu_managerview.html', {'store': store, 'menu': menu})
+
 
 @login_required(login_url='/accounts/login/')
 def UpdateStore(request, store_id):
@@ -52,6 +58,7 @@ def UpdateStore(request, store_id):
             return HttpResponseRedirect("/storemanager")
 
     return render(request, 'update_managerview.html', {'form': form})
+
 
 @login_required(login_url='/accounts/login/')
 def UpdateFood(request, food_id, store_id):
@@ -76,6 +83,7 @@ def UpdateFood(request, food_id, store_id):
 
     return render(request, 'update_managerview.html', {'form': form})
 
+
 @login_required(login_url='/accounts/login/')
 def AddFood(request, store_id):
     form = FoodForm()
@@ -92,7 +100,8 @@ def AddFood(request, store_id):
 
     return render(request, 'addfood_managerview.html', {'form': form, 'store': store})
 
-#@login_required(login_url='/accounts/login/')
+
+# @login_required(login_url='/accounts/login/')
 class DeleteFood(DeleteView):
     template_name = 'deletefood_managerview.html'
 
@@ -100,7 +109,7 @@ class DeleteFood(DeleteView):
         if self.request.user.has_perm('Food.delete_food'):
             store_id = self.kwargs.get("store_id")
             food_id = self.kwargs.get("food_id")
-            store =  get_object_or_404(self.request.user.store_set.all(), id=store_id)
+            store = get_object_or_404(self.request.user.store_set.all(), id=store_id)
             return get_object_or_404(store.food_set.all(), id=food_id)
         else:
             raise Http404("Bạn không có quyền thực hiện chức năng này.")
@@ -114,17 +123,28 @@ class DeleteFood(DeleteView):
 def get_store_order(request, store_id):
     group = Group.objects.get(name='Store Owner')
     if group in request.user.groups.all():
-    #if request.user.has_perm('Food.delete_food'):
+        # if request.user.has_perm('Food.delete_food'):
         store = get_object_or_404(request.user.store_set.all(), id=store_id)
         completed_orders = store.storeorder_set.filter(status='C')
-        completed_orders = list(zip(completed_orders, [order.orderitem_set.all() for order in completed_orders]))
+        completed_orders = list(zip(completed_orders, [order.orderitem_set.all() for order in completed_orders],
+                                    [order.getTotal() for order in completed_orders]))
         processing_orders = store.storeorder_set.filter(status='P')
-        processing_orders = list(zip(processing_orders, [order.orderitem_set.all() for order in processing_orders]))
-        return render(request, 'order_managerview.html', {'completed_orders' : completed_orders,
-                                                          'processing_orders' : processing_orders,})
+        processing_orders = list(zip(processing_orders, [order.orderitem_set.all() for order in processing_orders],
+                                     [order.getTotal() for order in processing_orders]))
+        return render(request, 'order_managerview.html', {'completed_orders': completed_orders,
+                                                          'processing_orders': processing_orders, })
 
     else:
         raise Http404("Bạn không có quyền thực hiện chức năng này")
 
+
 def onStoreOrderCompleted(request, store_id, order_id):
-    pass
+    store = get_object_or_404(request.user.store_set.all(), id=store_id)
+    store_order = get_object_or_404(store.storeorder_set.all(), id=order_id)
+
+    store_order.status = Status.COMPLETED
+    store_order.save()
+    # signal the customer's order
+    store_completed_signal.send(sender=store, store_order=store_order)
+
+    return JsonResponse({"success": True}, status=200)
