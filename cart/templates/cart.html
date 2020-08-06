@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load static %}
 {% block title %}Giỏ hàng{% endblock %}
 
 {% block content %}
@@ -60,14 +59,13 @@
                     <h3>Thành công!</h3>
                     <p>Đơn hàng của bạn đang được xử lí.</p>
                 </div>
-                <a id="modal-btn" class="btn btn-success" href="" ></a>
+                <a id="modal-btn" class="btn btn-success" href=""></a>
             </div>
         </div>
     </div>
 </div>
-<!--Model Popup ends-->
-{% block javascript %}
 
+{% block javascript %}
 <script>
     //setup before functions
     var timer;                //timer identifier
@@ -153,6 +151,7 @@
             }
         });
     }
+
 
 
 

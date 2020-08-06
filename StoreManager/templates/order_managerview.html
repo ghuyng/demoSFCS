@@ -167,6 +167,10 @@
 
     }
 
+
+    setInterval(function () {
+        $("#accordionExample").load(location.href + " #accordionExample");
+    }, 30000);
 </script>
 
 {% endblock %}
