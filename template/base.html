@@ -121,6 +121,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 
         </p>
         <!-- Notifications icon -->
+        {% if user.is_authenticated %}
         <ul id="nav" class="w3-right mr-3">
             <li id="notification_li">
                 <a href="#" id="notificationLink">
@@ -135,6 +136,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
                 </div>
             </li>
         </ul>
+        {% endif %}
         <!-- Start Top Search -->
         <!-- Search form -->
         <form action="/search/" method="get"
@@ -171,6 +173,22 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 
         });
 
+
+    setInterval(function () {
+        $.ajax({
+            url: "/get_notifications/",
+            type: 'POST',
+            data: {'check': true},
+
+            success: function (json) {
+                if (json.result) {
+                    $('#notify_icon').addClass("notification");
+                    var doc = $.parseHTML(json.notifications_list);
+                    $('#notifications-list').html(doc);
+                }
+            }
+        });
+    }, 60000);
 
 
 

@@ -24,7 +24,7 @@
     position: absolute;
     top: 30px;
     margin-left: -170px;
-    width: 400px;
+    width: 300px;
     z-index: 1;
     display: none; // Enable this after jquery implementation
 }
@@ -47,9 +47,8 @@
     padding: 8px;
     font-size: 13px;
     background-color: #ffffff;
-    position: fixed;
     z-index: 1000;
-    width: 384px;
+    width: 100%;
     border-bottom: 1px solid #dddddd;
 }
 #notificationsBody
