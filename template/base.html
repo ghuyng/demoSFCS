@@ -127,7 +127,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
                 <a href="#" id="notificationLink">
                     <i class="fa fa-bell fa-lg" aria-hidden="true"></i>
                 </a>
-                <span id="notification_count">3</span>
+                <span id="notification_count">10</span>
 
                 <div id="notificationContainer">
                     <div id="notificationTitle">Notifications</div>
@@ -150,14 +150,38 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
     </header>
     <!-- Optional JavaScript -->
 
-    {% block javascript %}
 
     <!-- script for notifications feature -->
     <script>
+        function getNotifications(){
+            $.ajax({
+                url: "{% url 'get-notifications' %}",
+                type: 'GET',
+                data: {'check': true},
+
+                success: function (response) {
+                    if (response.result > 0) {
+                        $('#notification_count').text(response.result);
+                        $('#notification_count').show();
+
+                        var doc = $.parseHTML(response.notifications_list);
+                        $('#notificationsBody').html(doc);
+                    }
+                }
+            });
+        }
+
         $(document).ready(function(){
             $("#notificationLink").click(function(){
-                $("#notificationContainer").fadeToggle(300);
-                $("#notification_count").fadeOut("slow");
+                $.ajax({
+                    url: "{% url 'mark-notifications' %}",
+                    type: 'GET',
+
+                    success: function (response) {
+                        $("#notificationContainer").fadeToggle(300);
+                        $("#notification_count").fadeOut("slow");
+                    }
+                });
                 return false;
             });
 
@@ -171,24 +195,11 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
                 return false;
             });
 
+            getNotifications()
         });
 
 
-    setInterval(function () {
-        $.ajax({
-            url: "/get_notifications/",
-            type: 'POST',
-            data: {'check': true},
-
-            success: function (json) {
-                if (json.result) {
-                    $('#notify_icon').addClass("notification");
-                    var doc = $.parseHTML(json.notifications_list);
-                    $('#notifications-list').html(doc);
-                }
-            }
-        });
-    }, 60000);
+    setInterval(getNotifications, 10000);
 
 
 
@@ -217,7 +228,6 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 
 
     </script>
-    {% endblock %}
     <main>
         {% block content %}
         {% endblock %}

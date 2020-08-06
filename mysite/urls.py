@@ -26,4 +26,5 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('foodcourtmanager/', include('FoodCourtManager.urls')),
     path('storemanager/', include('StoreManager.urls')),
+    path('notifications/', include('notifications.urls')),
 ]

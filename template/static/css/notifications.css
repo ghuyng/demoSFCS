@@ -50,20 +50,26 @@
     z-index: 1000;
     width: 100%;
     border-bottom: 1px solid #dddddd;
+
 }
 #notificationsBody
 {
-    padding: 33px 0px 0px 0px !important;
-    min-height:300px;
+    padding: 8px 0px 0px 0px !important;
+    min-height:75px;
+    background-color: #ffffff;
+    text-align: center;
+    font-size: 13px;
+    border-bottom: 1px solid #dddddd;
+    margin-top: 0;
 }
 #notificationFooter
 {
-    background-color: #e9eaed;
-    text-align: center;
-    font-weight: bold;
-    padding: 8px;
-    font-size: 12px;
-    border-top: 1px solid #dddddd;
+    background:#F6F7F8;
+    padding:8px;
+    font-size:12px;
+    font-weight:bold;
+    border-top:solid 1px rgba(100, 100, 100, .30);
+    text-align:center;
 }
 
 
@@ -81,4 +87,13 @@
     position: absolute;
     margin-top: -11px;
     font-size: 11px;
+}
+
+#notificationFooter a {
+    color:#3b5998;
+}
+#notificationFooter a:hover {
+    background:#F6F7F8;
+    color:#3b5998;
+    text-decoration:underline;
 }
