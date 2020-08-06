@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from store.models import Store
+from order.models import OrderItem
 from .forms import StoreForm
 from django.views.generic import DeleteView, DetailView
 from django.urls import reverse
@@ -19,7 +20,6 @@ def FoodCourtView(request):
         return HttpResponse('Bạn không có quyền thực hiện chức năng này')
 
 class AddStoreView(View):
-
     def get(self, request):
         Form = StoreForm()
         return render(request, 'addstore_managerview.html', {'Form':Form})
@@ -46,3 +46,8 @@ class DeleteStoreView(DeleteView):
 
     def get_success_url(self):
         return reverse('foodcourtmanager:food-court-view')
+
+def GetReport(request):
+    OrderItem_list = OrderItem.objects.all()
+    data={'OrderItems':OrderItem_list}
+    return render(request, 'report_managerview.html', data)

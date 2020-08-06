@@ -79,7 +79,7 @@ def UpdateFood(request, food_id, store_id):
             food.imgURL = imgURL
             food.stock = stock
             food.save()
-            return HttpResponseRedirect(reverse('storemanager:edit-store', args=(store_id,)))
+            return HttpResponseRedirect(reverse('storemanager:edit-menu', args=(store_id,)))
 
     return render(request, 'update_managerview.html', {'form': form})
 
@@ -148,3 +148,4 @@ def onStoreOrderCompleted(request, store_id, order_id):
     store_completed_signal.send(sender=store, store_order=store_order)
 
     return JsonResponse({"success": True}, status=200)
+

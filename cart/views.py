@@ -44,12 +44,15 @@ def viewCart(request):
     cart_dict = request.session.get('cart', {})
     cart = []
     total = 0
+    price = 0
     for food_id, quantity in cart_dict.items():
         food = Food.objects.get(id=food_id)
         cart.append((food, quantity))
         total += food.price * quantity
 
-    return render(request, 'cart.html', {'cart': cart, 'total' : total})
+    total_in_USD = round(total / 23000, 2)
+
+    return render(request, 'cart.html', {'cart': cart, 'total' : total, 'total_in_USD' : total_in_USD})
 
 
 def removeFromCart(request):
