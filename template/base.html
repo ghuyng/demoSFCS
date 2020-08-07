@@ -152,7 +152,9 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 
 
     <!-- script for notifications feature -->
-    <script>
+    {% if user.is_authenticated %}
+    <script type="text/javascript">
+        console.log("HERE");
         function getNotifications(){
             $.ajax({
                 url: "{% url 'get-notifications' %}",
@@ -194,18 +196,13 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
             $("#notificationContainer").click(function(){
                 return false;
             });
-
-            getNotifications()
+            getNotifications();
+            setInterval(getNotifications, 10000);
         });
 
 
-    setInterval(getNotifications, 10000);
-
-
-
-
-
     </script>
+    {% endif %}
 
     <script>
     // Open and close sidebar
@@ -219,13 +216,6 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
         document.getElementById("mySidebar").style.display = "none";
         document.getElementById("myOverlay").style.display = "none";
     }
-
-    function openSearchBar() { }
-
-
-
-
-
 
     </script>
     <main>
