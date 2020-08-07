@@ -6,30 +6,81 @@
 
 {% block content %}
 {% load humanize %}
-<div class="w3-container w3-text-grey" id="food_length">
-    <h4>ĐƠN HÀNG</h4>
+<div class="w3-container w3-text-grey w3-center" id="food_length">
+    <h4>THÔNG TIN ĐƠN HÀNG</h4>
 </div>
 <div class="container">
-    <div class="row">
-        <div class="col-9 border border-primary rounded">
-            <ul class="list-unstyled">
-                <li> Mã đơn hàng : {{order.id}}</li>
-                <li> Người dùng : {{ order.customer.username }}</li>
-                <li> Ngày mua : {{ order.date_created|date:'d/m/Y H:i:s' }}</li>
-                <li> Trạng thái đơn hàng : {{ status }} </li>
-                <li> Danh sách sản phẩm : </li>
-                <ul class="list-unstyled">
-                    {% for item in item_list %}
-                        <li> {{ item.product.name }} , số lượng : {{ item.quantity }}, giá : {{ item.paid_price }}</li>
-                    {% endfor %}
+    <div class="border border-primary rounded">
+        <table class="table">
+            <tbody>
+            <tr>
+                <td><strong>Mã đơn hàng</strong></td>
+                <td> {{order.id}}</td>
+            </tr>
+            <tr>
+                <td><strong>Khách hàng</strong></td>
+                <td> {{ order.customer.username }}</td>
+            </tr>
+            <tr>
+                <td><strong>Ngày mua</strong></td>
+                <td> {{ order.date_created|date:'d/m/Y H:i:s' }}</td>
+            </tr>
+            <tr>
+                <td><strong>Trạng thái đơn hàng</strong></td>
+                <td> {{ status }}</td>
+            </tr>
 
-                </ul>
-
-                <li> Thành tiền : {{ total }}</li>
-            </ul>
+            </tbody>
+        </table>
+        {% if status == 'Processing' %}
+        <div style="text-align:center; color:red;">
+            <p> Đơn hàng của bạn đang được xử lí và sẽ hoàn tất trong khoảng 10 phút.</p>
+            <p> Chúng tôi sẽ gửi thông báo cho bạn khi hoàn tất</p>
         </div>
+        {% endif %}
     </div>
 </div>
+
+<div class="w3-container w3-text-grey w3-center">
+    <h4>DANH SÁCH SẢN PHẨM</h4>
+</div>
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th scope="col"></th>
+        <th scope="col">Tên sản phẩm</th>
+        <th scope="col"></th>
+        <th scope="col">Cửa hàng</th>
+        <th scope="col">Số lượng</th>
+        <th scope="col">Giá tiền</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in item_list %}
+    <tr>
+        <td>
+            <img src="{{ item.product.imgURL }}" class="mr-3" alt={{tem.product.name}}
+                 width="50px"
+                 height="50px">
+        </td>
+        <td colspan="2">
+            <h5>{{ item.product.name }}</h5>
+        </td>
+        <td>
+            <a href="{% url 'user-store-view' item.product.store.id %}">{{ item.product.store }}</a>
+        </td>
+        <td>
+            <strong>{{ item.quantity }}</strong>
+        </td>
+        <td>
+            <strong>{{ item.paid_price|intcomma }} VNĐ </strong>
+        </td>
+
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<h3 style="text-align:right">Thành tiền : {{ total|intcomma }} VNĐ</h3>
 
 
 {% endblock %}

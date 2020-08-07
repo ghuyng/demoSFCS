@@ -40,7 +40,8 @@ def makeOrder(request):
 
 @login_required
 def viewOrderList(request):
-    order_list = request.user.order_set.all().order_by('-date_created')
+    order_list = request.user.order_set.order_by('-date_created')
+    order_list = list(zip(order_list, [(order.getTotal(), order.getStatus().label) for order in order_list]))
     return render(request, 'user_orderlist.html', {'order_list': order_list})
 
 

@@ -1,13 +1,38 @@
 {% extends 'base.html' %}
 
-{% block title %}
-<title> Order </title>
-{% endblock %}
+{% block title %}Order{% endblock %}
 
 {% block content %}
 {% load humanize %}
-{% for order in order_list %}
-<a href="{% url 'view-order' order.id %}"> {{order}} </a>
-<br>
-{% endfor %}
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th scope="col">Order ID</th>
+        <th scope="col">Thời gian đặt</th>
+        <th scope="col">Tổng giá trị</th>
+        <th scope="col">Trạng thái</th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for order, info in order_list %}
+    <tr>
+        <th scope="row">{{order.id}}</th>
+        <td><strong>{{ order.date_created|date:'d/m/Y H:i:s' }}</strong></td>
+        <td><strong>{{ info.0|intcomma }}</strong></td>
+        <td>{{ info.1 }} </td>
+        <td>
+            <a href="{% url 'view-order' order.id %}">
+                Xem chi tiết
+            </a>
+        </td>
+
+
+    </tr>
+
+    {% endfor %}
+
+    </tbody>
+</table>
+
 {% endblock %}
