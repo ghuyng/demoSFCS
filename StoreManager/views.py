@@ -152,4 +152,8 @@ def onStoreOrderCompleted(request, store_id, order_id):
     return JsonResponse({"success": True}, status=200)
 
 def view_report(request, store_id):
-    pass
+    store = get_object_or_404(request.user.store_set.all(), id=store_id)
+    store_order_set = store.storeorder_set.all()
+    OrderItem_list = [order_item for store_order in store.storeorder_set.all() for order_item in store_order.orderitem_set.all()]
+    data = {'OrderItems': OrderItem_list}
+    return render(request, 'store_report_view.html', data)
