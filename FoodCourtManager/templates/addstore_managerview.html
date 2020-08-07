@@ -10,7 +10,7 @@ AddStore
 <form action="{% url 'foodcourtmanager:add-food-court' %}" method="post">
     {% csrf_token %}
     {{Form.as_p}}
-    <p><input type="submit" value="Add"> <input type="button" value="Cancal" onclick="history.back()"></p>
+    <p><input type="submit" value="Add"> <input type="button" value="Cancel" onclick="history.back()"></p>
 </form>
 
 

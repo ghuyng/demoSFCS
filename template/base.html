@@ -155,15 +155,11 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
                 data: {'check': true},
 
                 success: function (response) {
-                    $('#notification_count').text(response.result);
                     var doc = $.parseHTML(response.notifications_list);
                     $('#noti').html(doc);
                     if (response.result > 0) {
                         $('#notification_count').text(response.result);
                         $('#notification_count').show();
-
-                        var doc = $.parseHTML(response.notifications_list);
-                        $('#noti').html(doc);
                     }
                 }
             });

@@ -61,6 +61,7 @@
                 <div id="modal-message">
                     <h3>Thành công!</h3>
                     <p>Đơn hàng của bạn đang được xử lí.</p>
+                    <p>Quý khách vui lòng nhận món sau 10 phút</p>
                 </div>
                 <a id="modal-btn" class="btn btn-success" href=""></a>
             </div>
@@ -175,7 +176,7 @@
         onApprove: function(data, actions) {
             return actions.order.capture().then(function(details) {
                 // Show a success message to the buyer
-                makeOrder()
+                makeOrder();
                 alert('Transaction completed by ' + details.payer.name.given_name + '!');
             });
         }

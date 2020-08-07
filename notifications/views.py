@@ -8,11 +8,12 @@ from .models import Notification
 # Create your views here.
 
 def get_notifications(request):
-    recent_notis = request.user.notification_set.all()
+    recent_notis = request.user.notification_set.all().order_by('-date_created')
+    result = recent_notis.filter(status=Notification.UNREAD).count()
     if len(recent_notis) > 5:
         recent_notis = recent_notis[:5]
 
-    result = recent_notis.filter(status=Notification.UNREAD).count()
+
 
     return JsonResponse({
         'result' : result,
