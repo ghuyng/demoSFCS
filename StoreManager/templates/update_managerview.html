@@ -7,7 +7,23 @@
 
 <form method="POST">
     {% csrf_token %}
+<<<<<<< HEAD
     {{form.as_p}}
     <p><input type="submit" value="Save"> <input type="button" value="Cancel" onclick="history.back()"></p>
+=======
+    {% for field in form %}
+      <p>
+        {{ field.label_tag }}<br>
+        {{ field }}
+        {% if field.help_text %}
+          <small style="color: grey">{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in field.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
+      </p>
+    {% endfor %}
+    <p><input class="btn btn-success" type="submit" value="Lưu"> <input class="btn btn-secondary" type="button" value="Hủy bỏ" onclick="history.back()"></p>
+>>>>>>> phat
 </form>
 {% endblock %}

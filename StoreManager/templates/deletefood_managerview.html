@@ -6,11 +6,13 @@ Delete Store
 
 {% block content %}
 {% load humanize %}
-
+<div class="container store-list">
+<div class="card border border-dark" align="center">
 <form action='.' method="POST">
     {% csrf_token %}
-    <h1>Bạn có chắc chắn xóa món "{{food.name}}" ?</h1>
-    <p><input type="submit" value="Yes"> <input type="button" value="Cancel" onclick="history.back()"></p>
+    <h1>Bạn có chắc chắn muốn xóa món "{{food.name}}" ?</h1>
+    <p><input class="btn btn-success" type="submit" value="Xác nhận"> <input class="btn btn-secondary" type="button" value="Hủy bỏ" onclick="history.back()"></p>
 </form>
-
+</div>
+</div>
 {% endblock %}

@@ -21,6 +21,9 @@ class FoodView(View):
         food = get_object_or_404(Food, id=food_id)
         return render(request, 'food_page.html', {'food': food})
 
+def contact(request):
+    return render(request,'contact.html')
+
 
 
 

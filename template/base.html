@@ -1,6 +1,7 @@
 {% load static %}
 <!doctype html>
 <html lang="en">
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -33,6 +34,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 
 
 </style>
+<<<<<<< HEAD
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
@@ -45,6 +47,20 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
 <body class="w3-content" style="max-width:1400px">  <!-- place to resize main page-->
+=======
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+            integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+            crossorigin="anonymous"></script>
+<body class="w3-content" style="max-width:1400px;">  <!-- place to resize main page-->
+>>>>>>> phat
 
 <!-- Sidebar/menu -->
 <!-- Hidden Sidebar (reveals when clicked on menu icon)-->
@@ -64,7 +80,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
            onclick="closeNav()">Quản lí Cửa hàng</a>
         <a class="w3-bar-item w3-button w3-text-grey w3-hover-black" href="/foodcourtmanager/"
            onclick="closeNav()">Quản lí khu ăn uống</a>
-        <a href="#contact" class="w3-bar-item w3-button w3-text-grey w3-hover-black w3-padding">Liên hệ</a>
+        <a href="/contact" class="w3-bar-item w3-button w3-text-grey w3-hover-black w3-padding">Liên hệ</a>
 
     </div>
 </nav>
@@ -106,7 +122,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 
     </header>
     <header class="w3-container w3-xlarge">
-        <a style="text-decoration: none" href="/" class="w3-left">SFCS</a>
+        <a class="w3-left w3-button w3-black w3-large w3-text-white" style="text-decoration: none" href="/" >SFCS</a>
         <p class="w3-right">
             <a style="text-decoration: none" href="/cart">
                 <i class="fa fa-shopping-cart"></i>
@@ -135,7 +151,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
         <form action="/search/" method="get"
               class="form-inline d-flex justify-content-center md-form form-sm mt-0 my-2">
             <i class="fa fa-search" aria-hidden="true"></i>
-            <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"
+            <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Tìm kiếm trên trang web"
                    aria-label="Search" name="food_name">
         </form>
         <!-- End top search -->
