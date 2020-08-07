@@ -9,8 +9,7 @@ from django.views.generic import DeleteView, DetailView, CreateView, UpdateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from order.models import Status
-from notifications.signals import store_completed_signal
-
+from django.urls import reverse
 
 # Create your views here.
 @login_required(login_url='/accounts/login/')
@@ -145,7 +144,9 @@ def onStoreOrderCompleted(request, store_id, order_id):
     store_order.status = Status.COMPLETED
     store_order.save()
     # signal the customer's order
-    store_completed_signal.send(sender=store, store_order=store_order)
+    if store_order.order.getStatus() == Status.COMPLETED:
+        user = store_order.order.customer
+        user.notification_set.create(message="""Đơn hàng có ID: {} đã được hoàn tất""".format(store_order.order.id),
+                                     url_link=reverse('view-order', args=(store_order.order.id,)))
 
     return JsonResponse({"success": True}, status=200)
-

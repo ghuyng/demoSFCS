@@ -1,0 +1,12 @@
+{% for noti in noti_list%}
+<a href="{{ noti.url_link }}">
+    <div class="notifications notificationsBody">
+
+            {{ noti.message }}
+            <div class="notiDate">
+                {{ noti.date_created|date:'d/m/Y H:i:s' }}
+            </div>
+
+    </div>
+</a>
+{% endfor %}
