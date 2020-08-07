@@ -150,3 +150,6 @@ def onStoreOrderCompleted(request, store_id, order_id):
                                      url_link=reverse('view-order', args=(store_order.order.id,)))
 
     return JsonResponse({"success": True}, status=200)
+
+def view_report(request, store_id):
+    pass

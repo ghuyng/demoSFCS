@@ -7,6 +7,7 @@ urlpatterns = [
     path('', views.ManageStoreView, name='manage-store-list'),
     path('<int:store_id>/', views.ManageStore, name= 'manage-store'),
     path('<int:store_id>/menu/', views.ManageStoreMenu, name='edit-menu'),
+    path('<int:store_id>/report/', views.view_report, name='view-store-report'),
     path('<int:store_id>/update/', views.UpdateStore, name='update-store'),
     path('<int:store_id>/add/', views.AddFood, name='add-food'),
     path('<int:store_id>/order/', views.get_store_order, name='view-order'),

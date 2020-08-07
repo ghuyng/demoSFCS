@@ -42,27 +42,28 @@
 <div id="header_content">
     <h2> Báo cáo kinh doanh </h2>
 </div>
+{% load humanize %}
 <script>var income = 0</script>
 <table class="table" border="1">
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
                         <th>Store</th>
-                        <th>Price</th>
+                        <th>Price (VNĐ)</th>
                         <th>Quantity</th>
-                        <th>Total</th>
+                        <th>Total (VNĐ)</th>
                     </tr>
                     {% for OrderItem in OrderItems %}
                         <tr>
                             <td>{{ OrderItem.id }}</td>
                             <td>{{ OrderItem.product.name }}</td>
                             <td>{{ OrderItem.product.store.name }}</td>
-                            <td>{{ OrderItem.paid_price }}</td>
+                            <td>{{ OrderItem.paid_price|intcomma }}</td>
                             <td>{{ OrderItem.quantity }}</td>
                             <td><script>
                             var total = {{ OrderItem.paid_price }}*{{ OrderItem.quantity }};
                             income = income + total;
-                            document.write(total);
+                            document.write(total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                             </script></td>
                         </tr>
                     {% endfor %}
@@ -71,7 +72,7 @@
     <h1>
      Income:
     <script>
-    document.write(income);
+    document.write(income.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
     </script> VNĐ
     </h1>
 </div>
