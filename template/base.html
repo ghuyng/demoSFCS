@@ -1,9 +1,7 @@
-<!-- {% load static %}           necesary for using another css file -->
-
+{% load static %}
 <!doctype html>
 <html lang="en">
 <head>
-    {% load static %}
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,16 +10,11 @@
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <style>
         a {text-decoration : none;}
-
-
-
-
-
     </style>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type='text/css' href="{%static 'css/notifications.css' %}">
+    <link rel="stylesheet" type='text/css' href="{% static 'css/notifications.css' %}">
     <title>{% block title %}{% endblock %}</title>
     {% block extra_head %}{% endblock %}
 </head>
@@ -127,11 +120,11 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
                 <a href="#" id="notificationLink">
                     <i class="fa fa-bell fa-lg" aria-hidden="true"></i>
                 </a>
-                <span id="notification_count">10</span>
+                <span id="notification_count">0</span>
 
                 <div id="notificationContainer">
                     <div id="notificationTitle">Notifications</div>
-                    <div id="notificationsBody" class="notifications"></div>
+                    <div id="noti" class="notifications"></div>
                     <div id="notificationFooter"><a href="#">See All</a></div>
                 </div>
             </li>
@@ -162,12 +155,15 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
                 data: {'check': true},
 
                 success: function (response) {
+                    $('#notification_count').text(response.result);
+                    var doc = $.parseHTML(response.notifications_list);
+                    $('#noti').html(doc);
                     if (response.result > 0) {
                         $('#notification_count').text(response.result);
                         $('#notification_count').show();
 
                         var doc = $.parseHTML(response.notifications_list);
-                        $('#notificationsBody').html(doc);
+                        $('#noti').html(doc);
                     }
                 }
             });
@@ -192,10 +188,6 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
                 $("#notificationContainer").hide();
             });
 
-            //Popup on click
-            $("#notificationContainer").click(function(){
-                return false;
-            });
             getNotifications();
             setInterval(getNotifications, 10000);
         });
