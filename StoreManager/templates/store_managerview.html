@@ -37,15 +37,18 @@ label{
 </p>
 
 <div class="collapse" id="viewReport">
+    <form action = "{% url 'storemanager:view-store-report' store.id %}" method = "get">
     <label>Chọn ngày: </label>
-    <div id="datepicker" class="input-group date" data-date-format="dd-mm-yyyy">
-        <input id="date-input" class="form-control" readonly="" type="text"><span class="input-group-addon"></span>
+    <div id="datepicker" class="input-group date" data-date-format="yyyy-mm-dd">
+        <input id="date-input" class="form-control" readonly="" type="text" name="date"><span class="input-group-addon"></span>
     </div>
-    <p><button onclick="viewReportByDate()" class="btn btn-danger"> Xem báo cáo kinh doanh theo
-        ngày </button></p>
+    <p><input type="submit" class="btn btn-danger" value="Xem báo cáo kinh doanh theo ngày">  </p>
+    </form>
     <p><a href="{% url 'storemanager:view-store-report' store.id %}" class="btn btn-danger"> Xem báo cáo kinh doanh
         tổng </a></p>
 </div>
+
+{% block javascript %}
 <script type="text/javascript">
 $(function () {
     $("#datepicker").datepicker({
@@ -55,22 +58,7 @@ $(function () {
     }).datepicker('update', new Date());
 });
 
-function viewReportByDate(){
-    $.ajax({
-        type: 'GET',
-        url: "{% url 'view-report' store.id %}",
-        data: {
-            "date" : $("#date-input").val(),
-        },
-        success: function (response) {
-            // if success
-        },
-        error: function (response) {
-            console.log(response)
-        }
-    });
-}
-
 
 </script>
+{% endblock %}
 {% endblock %}
