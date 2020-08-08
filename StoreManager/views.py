@@ -11,6 +11,7 @@ from django.contrib.auth.models import Group
 from order.models import Status
 from django.urls import reverse
 
+
 # Create your views here.
 @login_required(login_url='/accounts/login/')
 def ManageStoreView(request):
@@ -152,5 +153,17 @@ def onStoreOrderCompleted(request, store_id, order_id):
 
     return JsonResponse({"success": True}, status=200)
 
+
 def view_report(request, store_id):
-    pass
+    store = get_object_or_404(request.user.store_set.all(), id=store_id)
+    store_order_set = []
+    if 'date' in request.GET and request.GET['date']:
+        date = request.GET['date']
+        store_order_set = store.storeorder_set.filter(order__date_created__range=[date + " 00:00:00", date + " 23:59:59"])
+    else:
+        store_order_set = store.storeorder_set.all()
+
+    OrderItem_list = [order_item for store_order in store_order_set for order_item in
+                      store_order.orderitem_set.all()]
+    data = {'OrderItems': OrderItem_list}
+    return render(request, 'store_report_view.html', data)

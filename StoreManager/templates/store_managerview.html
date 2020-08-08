@@ -1,12 +1,29 @@
 {% extends 'base.html' %}
-
 {% block title %}Manage Store{% endblock %}
+
 
 {% block content %}
 {% load humanize %}
+<link rel="stylesheet prefetch"
+      href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+<style>
+label{
+    margin-left: 20px;
+}
+#datepicker{
+    width:180px;
+    margin: 0 20px 20px 20px;
+}
+#datepicker > span:hover{
+    cursor: pointer;
+}
 
+
+
+</style>
 <p>
-   <a href="{% url 'storemanager:edit-menu' store.id %}" class="btn btn-primary"> Danh sách món ăn </a>
+    <a href="{% url 'storemanager:edit-menu' store.id %}" class="btn btn-primary"> Danh sách món ăn </a>
 </p>
 
 <p>
@@ -14,8 +31,34 @@
 </p>
 
 <p>
-    <a href="#" class="btn btn-primary"> Báo cáo kinh doanh </a>
+    <a class="btn btn-primary" data-toggle="collapse" href="#viewReport" role="button" aria-expanded="false"
+       aria-controls="viewReport"> Báo cáo kinh doanh
+    </a>
 </p>
 
+<div class="collapse" id="viewReport">
+    <form action = "{% url 'storemanager:view-store-report' store.id %}" method = "get">
+    <label>Chọn ngày: </label>
+    <div id="datepicker" class="input-group date" data-date-format="yyyy-mm-dd">
+        <input id="date-input" class="form-control" readonly="" type="text" name="date"><span class="input-group-addon"></span>
+    </div>
+    <p><input type="submit" class="btn btn-danger" value="Xem báo cáo kinh doanh theo ngày">  </p>
+    </form>
+    <p><a href="{% url 'storemanager:view-store-report' store.id %}" class="btn btn-danger"> Xem báo cáo kinh doanh
+        tổng </a></p>
+</div>
 
+{% block javascript %}
+<script type="text/javascript">
+$(function () {
+    $("#datepicker").datepicker({
+        autoclose: true,
+        todayHighlight: true,
+        endDate: '0d',
+    }).datepicker('update', new Date());
+});
+
+
+</script>
+{% endblock %}
 {% endblock %}
