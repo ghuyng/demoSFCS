@@ -17,7 +17,8 @@ def FoodCourtView(request):
         context = {'store_list': store_list}
         return render(request, 'foodcourt_managerview.html', context)
     else:
-        return HttpResponse('Bạn không có quyền thực hiện chức năng này')
+        #return HttpResponse('Bạn không có quyền thực hiện chức năng này')
+        return render(request, 'permission_fail.html')
 
 class AddStoreView(View):
     def get(self, request):

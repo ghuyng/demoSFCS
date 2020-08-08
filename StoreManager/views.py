@@ -20,7 +20,8 @@ def ManageStoreView(request):
         context = {'store_list': store_list}
         return render(request, 'storelist_managerview.html', context)
     else:
-        return HttpResponse('Bạn không có quyền thực hiện chức năng này')
+        #return HttpResponse('Bạn không có quyền thực hiện chức năng này')
+        return render(request,'permission_fail.html')
 
 
 @login_required(login_url='/accounts/login/')
