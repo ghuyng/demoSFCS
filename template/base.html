@@ -61,10 +61,14 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
            onclick="closeNav()">Các cửa hàng</a>
         <a href="{% url 'order-list' %}" class="w3-bar-item w3-button w3-text-grey w3-hover-black" onclick="closeNav()">Đơn
             hàng</a>
+        {% if perms.store.change_store %}
         <a class="w3-bar-item w3-button w3-text-grey w3-hover-black" href="/storemanager/"
            onclick="closeNav()">Quản lí Cửa hàng</a>
+        {% endif %}
+        {% if perms.store.add_store %}
         <a class="w3-bar-item w3-button w3-text-grey w3-hover-black" href="/foodcourtmanager/"
            onclick="closeNav()">Quản lí khu ăn uống</a>
+        {% endif %}
         <a href="/contact" class="w3-bar-item w3-button w3-text-grey w3-hover-black w3-padding">Liên hệ</a>
 
     </div>
